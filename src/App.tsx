@@ -6,7 +6,7 @@ import Rail from '@/components/Rail'
 import IntroOverlay from '@/components/IntroOverlay'
 import CursorRing from '@/components/CursorRing'
 import AccessMenu from '@/components/AccessMenu'
-import { motionReduced } from '@/lib/a11y'
+import { motionReduced, A11Y_EVENT } from '@/lib/a11y'
 import { SCROLLER_ID } from '@/hooks/useLenis'
 import { useIsPhone } from '@/hooks/useMediaQuery'
 import { getPerfTier, watchFrameHealth, PERF_TIER_EVENT } from '@/lib/perf'
@@ -37,6 +37,17 @@ export default function App() {
   // that header.
   const phone = useIsPhone()
   const panelRef = useRef<HTMLElement>(null)
+  const [reduceMotion, setReduceMotion] = useState(() => motionReduced() || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduceMotion(motionReduced() || query.matches)
+    window.addEventListener(A11Y_EVENT, update)
+    query.addEventListener('change', update)
+    return () => {
+      window.removeEventListener(A11Y_EVENT, update)
+      query.removeEventListener('change', update)
+    }
+  }, [])
 
   // The panel is the scroller, so a route change has to reset it by hand -
   // the browser only restores scroll on the document.
@@ -68,10 +79,8 @@ export default function App() {
   const [shouldLoadCanvas, setShouldLoadCanvas] = useState(false)
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const reduced =
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches || motionReduced()
     const isMobile = window.matchMedia('(pointer: coarse) and (hover: none)').matches
-    if (reduced || isMobile) return
+    if (reduceMotion || isMobile) return
     // Defer the Three.js fetch to idle time so it does not compete with
     // initial render / LCP. Falls back to setTimeout if requestIdleCallback
     // is unavailable (Safari).
@@ -89,14 +98,14 @@ export default function App() {
     }
     if (document.readyState === 'complete') start()
     else window.addEventListener('load', start, { once: true })
-  }, [])
+  }, [reduceMotion])
 
   return (
     <>
       <IntroOverlay />
       <CursorRing />
       <a href={`#${SCROLLER_ID}`} className="skip-link">Skip to main content</a>
-      {shouldLoadCanvas && perfTier !== 'low' && (
+      {shouldLoadCanvas && !reduceMotion && perfTier !== 'low' && (
         <Suspense fallback={null}>
           <HeroCanvas />
         </Suspense>

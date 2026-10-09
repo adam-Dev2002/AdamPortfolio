@@ -1,0 +1,106 @@
+/* Content grows instead of compressing images and text into fixed rows. */
+@media (min-width: 1100px) {
+  .shell__panel[data-fixed='true'] { overflow-y: auto; }
+  .home { height: auto; min-height: 100%; grid-template-rows: auto auto auto; }
+  .home__glass--showcase { height: auto; display: block; }
+  .home__showcase > .bento { height: auto; grid-template-rows: repeat(2, minmax(260px, auto)); }
+}
+.home .bento__media { flex: 1 0 auto; min-height: 130px; }
+.home .bento__offers { container-type: normal; overflow: visible; }
+.home .bento__offer { flex: 0 0 auto; min-height: 44px; padding-block: 8px; gap: 8px; }
+.home .bento__offer-title { font-size: 13px; white-space: normal; overflow: visible; }
+.home .bento__offer-note { font-size: 11px; white-space: normal; }
+.home .bento__photo { --i: 1; flex-shrink: 0; }
+.home .bento__reviews { min-height: 180px; }
+.hprofile__avatar { flex: none; aspect-ratio: 1; }
+.hprofile__who { flex: 1; }
+.home .hprofile__menu { flex: none; }
+
+/* A wrapping list keeps all brands readable, including with motion disabled. */
+.home .tools-marquee {
+  --navy: inherit;
+  --white: inherit;
+  --paper: inherit;
+  --cream: inherit;
+  --line: inherit;
+  --line-strong: inherit;
+  margin: 0;
+  min-width: 0;
+  overflow: visible;
+  mask-image: none;
+  -webkit-mask-image: none;
+  background: var(--surface-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: none;
+}
+.home .tools-marquee__track {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin: 0;
+  padding: 12px;
+  list-style: none;
+  animation: none;
+  will-change: auto;
+}
+.home .tools-marquee__item {
+  width: auto;
+  flex-direction: row;
+  min-width: 0;
+  gap: 8px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+.home .tools-marquee__item::after { display: none; }
+.home .tools-marquee__tile {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border: 1px solid rgba(11, 30, 63, .12);
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: none;
+}
+.home .tools-marquee__img { width: 23px; height: 23px; object-fit: contain; }
+.home .tools-marquee__label { max-width: none; overflow: visible; color: var(--navy); }
+.home__tools-label { white-space: normal; }
+.a11y__panel { max-height: calc(100dvh - 120px); overflow-y: auto; }
+
+/* Zoom remains available, while enlarged content reflows into fewer columns. */
+:root[data-a11y-text] .home .bento {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: none;
+  grid-auto-rows: auto;
+}
+:root[data-a11y-text] .home .bento__card { min-height: 280px; }
+:root[data-a11y-text] .home__headline { flex-wrap: wrap; }
+:root[data-a11y-text] .home__title { flex-basis: 100%; }
+:root[data-a11y-text] .home__tools { display: flex; align-items: stretch; }
+:root[data-a11y-text] .home__tools-head { border-right: 0; padding-right: 0; }
+:root[data-a11y-text] .pgrid { height: auto; min-height: 100%; }
+:root[data-a11y-text] .agrid,
+:root[data-a11y-text] .cgrid,
+:root[data-a11y-text] .xgrid { display: flex; }
+:root[data-a11y-text] .agrid__glass,
+:root[data-a11y-text] .cgrid__glass,
+:root[data-a11y-text] .xgrid__glass,
+:root[data-a11y-text] .portfolio-video { display: flex; flex-direction: column; height: auto; grid-template-rows: auto; }
+:root[data-a11y-text] .agrid__portrait { height: 320px; margin: 0; }
+:root[data-a11y-text] .agrid__portrait img { height: 100%; object-fit: contain; }
+:root[data-a11y-text] .portfolio-video__frame { width: 100%; flex: none; }
+:root[data-a11y-text] .bento__offers { min-height: 150px; }
+:root[data-a11y-text] .bento__offer-note { display: block; }
+:root[data-a11y-contrast='true'] { --surface-glass: var(--paper); --surface-card: var(--white); }
+
+@media (max-width: 639px) {
+  .home .tools-marquee__track { gap: 10px 14px; padding: 8px 0; }
+  .home .tools-marquee__item { font-size: 12px; }
+  .home .tools-marquee__tile { width: 32px; height: 32px; }
+  .a11y__panel { max-height: calc(100dvh - 100px); }
+}

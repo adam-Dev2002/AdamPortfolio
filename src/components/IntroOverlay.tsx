@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { profile } from '@/data/profile'
+import { readPrefs } from '@/lib/a11y'
 
 /**
  * IntroOverlay - "the workflow writes the line".
@@ -58,6 +59,7 @@ const STEPS = [
 const shouldRun =
   typeof window !== 'undefined' &&
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+  !readPrefs().motion &&
   window.location.pathname === '/'
 
 // Two classes, because the page and the headline are handed back at different

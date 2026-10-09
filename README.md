@@ -5,6 +5,8 @@ Adam R. Romas's personal portfolio, focused on AI engineering, n8n automation, w
 ## Features
 
 - Responsive desktop and mobile layouts with light and dark themes.
+- Accessibility controls for enlarged text, high contrast, reduced motion, and underlined links.
+- Colored tool icons, including Vercel for project deployment.
 - Project galleries with back/close controls, zoom, and scroll restoration.
 - HD workflow diagrams and explanations derived from n8n exports.
 - FU Media demo video, 5S Plumbing website, restaurant app designs, and pet shop business card.
@@ -55,6 +57,7 @@ Adapted from [BrewedOps Portfolio Template](https://github.com/brewed-ops/portfo
 - Contour background technique inspired by the landonorris.com site by OFF+BRAND. The simplex noise is Ashima Arts / Ian McEwan (MIT).
 - Icons: [Phosphor](https://phosphoricons.com) (MIT). Tool logos in `public/icons/` are trademarks of their owners and are included as examples only.
 - Font: Poppins (SIL Open Font License).
+- Tool brand icons: [Simple Icons](https://simpleicons.org) (CC0). Brand marks remain trademarks of their owners.
 
 ## License
 
