@@ -1,0 +1,86 @@
+/* Warm paper, quiet ink, a small vermilion seal, and content-sized compartments. */
+.about-page { display: flex; height: auto; min-height: 100%; }
+.about-bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+.about-card {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: clamp(20px, 2.1vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--surface-card);
+  color: var(--navy);
+  box-shadow: 0 12px 32px -24px rgba(6, 12, 26, .35);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  overflow-wrap: anywhere;
+}
+.about-card__label { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--orange-ink); }
+.about-card h2 { font-size: clamp(20px, 1.5vw, 27px); line-height: 1.3; letter-spacing: -.025em; }
+.about-card p { margin: 0; font-size: 14px; line-height: 1.75; color: var(--muted); }
+.about-card--intro { grid-column: span 4; background: linear-gradient(135deg, var(--surface-card), var(--surface-glass)); }
+.about-card .about-intro__title { max-width: 25ch; font-size: clamp(28px, 2.5vw, 44px); line-height: 1.13; }
+.about-intro__body { max-width: 70ch; }
+.about-stamp { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border: 1px solid #B84938; border-radius: 9px; color: #B84938; font-size: 24px; font-weight: 500; line-height: 1; }
+[data-theme='dark'] .about-stamp { color: #FF9D86; border-color: #FF9D86; }
+.about-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding-top: 4px; }
+.about-action, .about-text-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 600; text-decoration: none; color: var(--navy); }
+.about-action { min-height: 44px; padding: 10px 16px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface-card); }
+.about-action:hover, .about-text-link:hover { color: var(--orange-ink); border-color: var(--orange); }
+.about-action:focus-visible, .about-text-link:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.about-card--portrait { grid-column: span 2; grid-row: span 2; justify-content: center; gap: 20px; }
+.about-portrait__frame { width: 100%; display: grid; place-items: center; padding: 12px; border-radius: 16px; background: radial-gradient(ellipse at bottom right, rgba(255, 122, 26, .12), transparent 70%), var(--tint); }
+.about-portrait__frame img { display: block; width: 100%; max-width: 240px; height: auto; max-height: 360px; object-fit: contain; border-radius: 12px; border: 4px solid var(--paper); }
+.about-card--portrait figcaption { display: flex; flex-direction: column; gap: 7px; font-size: 13px; color: var(--muted); }
+.about-card--portrait figcaption strong { color: var(--navy); font-size: 18px; }
+.about-portrait__location { display: flex; align-items: center; gap: 5px; font-size: 11px; }
+.about-card--focus, .about-card--education, .about-card--credentials { grid-column: span 2; }
+.about-card--education { background: linear-gradient(145deg, var(--surface-card), color-mix(in srgb, var(--cream) 95%, var(--orange))); }
+.about-tool-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: auto; padding-top: 8px; }
+.about-tool { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgba(11, 30, 63, .13); border-radius: 10px; background: #fff; }
+.about-tool-row__note { flex-basis: 100%; color: var(--muted); font-size: 11px; padding-top: 3px; }
+.about-card__symbol { color: var(--orange-ink); }
+.about-facts { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 12px; color: var(--muted); }
+.about-facts strong { color: var(--navy); }
+.about-card__note { color: var(--orange-ink); font-size: 12px; }
+.about-card--skills { grid-column: span 4; }
+.about-capabilities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; list-style: none; padding: 0; margin: 2px 0 0; width: 100%; }
+.about-capabilities li { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.about-capability__icon { flex: none; color: var(--orange-ink); padding-top: 3px; }
+.about-capabilities li > span:last-child { display: flex; flex-direction: column; gap: 5px; }
+.about-capabilities strong { font-size: 13px; line-height: 1.5; }
+.about-capabilities li > span > span { font-size: 12px; line-height: 1.6; color: var(--muted); }
+.about-certificates { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.about-certificates li { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; line-height: 1.65; color: var(--muted); }
+.about-certificates svg { flex: none; color: var(--orange-ink); margin-top: 2px; }
+.about-card--connect { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; }
+.about-card--connect h2 { margin-top: 8px; }
+
+/* A bounded reel keeps its siblings from stretching to the full image stack. */
+.home .bento__reel { flex: none; height: 210px; min-height: 0; max-height: 240px; align-self: center; }
+.home .bento__reviews { flex: none; height: 180px; min-height: 0; align-self: center; }
+.home .bento__fan { align-content: center; gap: 12px; }
+.bento__portrait-note { grid-row: 2; color: var(--muted); font-size: 11px; text-align: center; line-height: 1.5; }
+.bento__contact-mark { color: var(--orange-ink); }
+.bento__contact-note { font-size: 12px; color: var(--muted); text-align: center; }
+.home .bento__desc { overflow-wrap: anywhere; }
+
+@media (max-width: 1199px) {
+  .about-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-card--intro, .about-card--skills { grid-column: span 2; }
+  .about-card--portrait { grid-column: span 1; grid-row: span 2; }
+  .about-card--focus, .about-card--education { grid-column: span 1; }
+  .about-card--credentials { grid-column: span 2; }
+}
+:root[data-a11y-text] .about-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+:root[data-a11y-text] .about-card--intro, :root[data-a11y-text] .about-card--skills { grid-column: span 2; }
+:root[data-a11y-text] .about-card--portrait, :root[data-a11y-text] .about-card--focus, :root[data-a11y-text] .about-card--education { grid-column: span 1; }
+:root[data-a11y-text] .about-card--credentials { grid-column: span 2; }
+@media (max-width: 639px) {
+  .about-bento, :root[data-a11y-text] .about-bento { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .about-bento .about-card, :root[data-a11y-text] .about-bento .about-card { grid-column: 1; grid-row: auto; }
+  .about-capabilities { grid-template-columns: minmax(0, 1fr); }
+  .about-card--connect { flex-direction: column; align-items: flex-start; }
+}

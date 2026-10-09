@@ -5,6 +5,7 @@ Adam R. Romas's personal portfolio, focused on AI engineering, n8n automation, w
 ## Features
 
 - Responsive desktop and mobile layouts with light and dark themes.
+- Japanese-inspired About bento with the same AI introduction as Home, education, credentials, and a practical toolkit.
 - Accessibility controls for enlarged text, high contrast, reduced motion, and underlined links.
 - Colored tool icons, including Vercel for project deployment.
 - Project galleries with back/close controls, zoom, and scroll restoration.

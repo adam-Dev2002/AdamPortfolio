@@ -65,11 +65,12 @@ export default function HomeBento() {
       </Link>
 
       <Link to="/about" className="bento__card bento__card--about">
-        <CardHead Icon={User} title="About" desc="BSIT graduate based in Dumaguete City." />
+        <CardHead Icon={User} title="About" desc={profile.role} />
         <div className="bento__media bento__fan" aria-hidden="true">
           <span className="bento__photo">
             <img src={profile.avatarSrc} alt="" loading="lazy" decoding="async" />
           </span>
+          <span className="bento__portrait-note">Foundation University · BSIT</span>
         </div>
       </Link>
 
@@ -120,6 +121,8 @@ export default function HomeBento() {
       <Link to="/contact" className="bento__card bento__card--creds">
         <CardHead Icon={EnvelopeSimple} title="Contact" desc={profile.email} />
         <div className="bento__media bento__badge">
+          <EnvelopeSimple className="bento__contact-mark" size={40} weight="duotone" aria-hidden="true" />
+          <span className="bento__contact-note">Let’s build something useful.</span>
           <span className="bento__badge-tag">{profile.phone}</span>
         </div>
       </Link>

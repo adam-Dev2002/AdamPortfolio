@@ -37,7 +37,7 @@ try {
     }
     await page.goto('http://127.0.0.1:5178/about', { waitUntil: 'networkidle' })
     await page.locator('h1').waitFor()
-    await page.locator('.agrid__portrait img').evaluate(img => img.decode())
+    await page.locator('.about-portrait__frame img').evaluate(img => img.decode())
     await page.evaluate(() => { document.documentElement.dataset.theme = 'dark' })
     await page.waitForTimeout(350)
     await page.screenshot({ path: `docs/screenshots/adam-${viewport.width}-about-dark.png`, fullPage: viewport.width < 1100 })
