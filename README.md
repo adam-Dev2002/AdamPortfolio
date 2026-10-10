@@ -41,6 +41,7 @@ Use `adam-port/portfolio-template-main` as the Root Directory if deploying the e
 
 - Profile, introduction, contact details, and social links: `src/data/profile.ts`
 - Project thumbnails and galleries: `src/data/portfolio.ts`
+- 5S Plumbing page captions and gallery: `src/data/plumbing.ts`
 - n8n workflow descriptions and captions: `src/data/workflows.ts`
 - Images, workflow previews, and resume: `public/`
 - Shared preview and card styling: `src/styles/portfolio-ui.css`
@@ -50,6 +51,8 @@ Generated workflow diagrams and screenshots are included. `node scripts/capture-
 The Joblink gallery features live 4K (3840 x 2160) screenshots of all nine workspace pages: dashboard, job search, news, applications, task board, calendar, links, sheet, and account settings. Run `node scripts/capture-joblink-authenticated.mjs` and sign in interactively to refresh them. Its dedicated browser profile is ignored by Git. `node scripts/capture-joblink.mjs` captures the public desktop and mobile sign-in screens included as additional views; authenticated screenshots are retained separately. The workbook gallery is a rendered excerpt of JOBHACK2026 (1).xlsx, with job metadata and snapshot status counts; it is not a screenshot of the Google Sheets interface. Email addresses, application messages, and draft IDs are excluded from the public excerpt.
 
 The contact form opens the visitor's email application by default. An optional backend can be configured with `VITE_CONTACT_ENDPOINT`.
+
+The 5S Plumbing gallery contains full-page screenshots of its 12 working public marketing pages at 3840 pixels wide. `node scripts/capture-plumbing.mjs` follows the site's public links and captures them; add `--resume` to reuse existing images. The footer's `/heating-and-cooling-adam/` link returned 404 during capture; the gallery uses the working `/heating-and-cooling/` page. Forms are pictured without submitting inquiries.
 
 ## Technology
 

@@ -1,4 +1,5 @@
 import { workflowProjects } from './workflows'
+import { plumbingGallery } from './plumbing'
 
 export type PortfolioProject = {
   title: string
@@ -51,12 +52,14 @@ export const portfolioProjects: PortfolioProject[] = [
     imageAlt: 'Screenshot of the 5S Plumbing business website homepage',
     imageFit: 'cover',
     category: 'Freelance · Web development',
-    description: 'A responsive website for a plumbing business.',
+    description: 'A plumbing business website with service pages, reviews, and quote requests.',
     details:
-      'Built with WordPress and GoDaddy, with 10+ service and information pages to improve the business’s online visibility and make its services easier to find.',
+      'Built with WordPress and GoDaddy to introduce the business, explain its services, share customer reviews, and help visitors request a quote. Explore the full-page screenshots in the gallery.',
     href: 'https://5splumbing.com/',
     linkLabel: 'Visit 5S Plumbing',
     external: true,
+    gallery: plumbingGallery,
+    previewWidth: 1280,
   },
   {
     title: 'FU Media',

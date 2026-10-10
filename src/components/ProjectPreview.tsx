@@ -77,7 +77,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
               <button className="preview-control" aria-label="Reset image zoom" onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</button>
               <button className="preview-control preview-control--icon" aria-label="Zoom in" disabled={zoom >= 2} onClick={() => setZoom(z => Math.min(2, z + 0.25))}><MagnifyingGlassPlus size={18} /></button>
             </div>
-            {previewWidth && <span className="project-preview__pan-hint">Scroll to follow the workflow</span>}
+            {previewWidth && <span className="project-preview__pan-hint">Scroll to explore the image</span>}
           </div>
         )}
         <div ref={stageRef} tabIndex={0} role="region" aria-label="Scrollable project preview" className={`project-preview__stage${project.gallery && project.title === 'Restaurant App' ? ' project-preview__stage--phone' : ''}`}>
