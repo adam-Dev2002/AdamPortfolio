@@ -54,6 +54,8 @@ The contact form opens the visitor's email application by default. An optional b
 
 The 5S Plumbing gallery contains full-page screenshots of its 12 working public marketing pages at 3840 pixels wide. `node scripts/capture-plumbing.mjs` follows the site's public links and captures them; add `--resume` to reuse existing images. The footer's `/heating-and-cooling-adam/` link returned 404 during capture; the gallery uses the working `/heating-and-cooling/` page. Forms are pictured without submitting inquiries.
 
+Joblink's application tracker demonstration includes eight clearly labeled fictional records. `node scripts/demo-joblink-applications.mjs` adds those records to the signed-in account if missing, verifies that they persist, clicks Export CSV, checks the downloaded records, and refreshes the dashboard, tracker, and CSV-preview screenshots. Run it only when adding demo records is intended. Actual downloads remain in the ignored `.preview-tools/joblink-exports/` directory; `docs/exports/joblink-demo-applications.csv` includes only the eight demo records. The CSV screenshot is a rendered preview of the verified download, not a spreadsheet-app screenshot.
+
 ## Technology
 
 React, TypeScript, Vite, React Router, CSS, Three.js, GSAP, and Phosphor icons. Browser preview checks use Playwright with Google Chrome.
