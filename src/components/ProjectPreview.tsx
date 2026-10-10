@@ -10,6 +10,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
   const [frame, setFrame] = useState(0)
   const [zoom, setZoom] = useState(1)
   const gallery = project.gallery ?? [{ src: project.imageSrc!, alt: project.imageAlt ?? project.title, label: 'Preview' }]
+  const previewWidth = gallery[frame].previewWidth ?? project.previewWidth
 
   useEffect(() => {
     const dialog = dialogRef.current!
@@ -66,7 +67,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
         </header>
         {!project.videoId && (
           <div className="project-preview__toolbar">
-            <div className="project-preview__tabs" aria-label="Design frames">
+            <div className="project-preview__tabs" aria-label="Project views">
               {gallery.map((image, index) => (
                 <button key={image.src} className="preview-control" aria-pressed={frame === index} onClick={() => { setFrame(index); setZoom(1); stageRef.current?.scrollTo({ top: 0, left: 0 }) }}>{image.label}</button>
               ))}
@@ -76,7 +77,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
               <button className="preview-control" aria-label="Reset image zoom" onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</button>
               <button className="preview-control preview-control--icon" aria-label="Zoom in" disabled={zoom >= 2} onClick={() => setZoom(z => Math.min(2, z + 0.25))}><MagnifyingGlassPlus size={18} /></button>
             </div>
-            {project.previewWidth && <span className="project-preview__pan-hint">Scroll to follow the workflow</span>}
+            {previewWidth && <span className="project-preview__pan-hint">Scroll to follow the workflow</span>}
           </div>
         )}
         <div ref={stageRef} tabIndex={0} role="region" aria-label="Scrollable project preview" className={`project-preview__stage${project.gallery && project.title === 'Restaurant App' ? ' project-preview__stage--phone' : ''}`}>
@@ -85,7 +86,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
               <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}`} title={`${project.title} project demo`} referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
             </div>
           ) : (
-            <div className="project-preview__image" style={{ width: project.previewWidth ? `${project.previewWidth * zoom}px` : `${zoom * 100}%`, maxWidth: project.title === 'Restaurant App' ? `${600 * zoom}px` : undefined }}>
+            <div className="project-preview__image" style={{ width: previewWidth ? `${previewWidth * zoom}px` : `${zoom * 100}%`, maxWidth: project.title === 'Restaurant App' ? `${600 * zoom}px` : undefined }}>
               <img src={gallery[frame].src} alt={gallery[frame].alt} />
             </div>
           )}

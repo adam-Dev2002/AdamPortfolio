@@ -16,6 +16,9 @@ export default function ProjectsGrid() {
         <p className="pgrid__lede">
           Websites, n8n automations, an AI-powered capstone, and interface design.
         </p>
+        <a className="page-back" href="https://joblink-tracker-c8zm.vercel.app/" target="_blank" rel="noopener noreferrer">
+          Visit Joblink Tracker <ArrowUpRight size={16} aria-hidden="true" />
+        </a>
       </header>
 
       <div className="home__glass pgrid__glass portfolio-page__glass">

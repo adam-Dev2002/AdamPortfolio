@@ -6,7 +6,7 @@ import { chromium } from 'playwright'
 // credential references and personal addresses never enter public assets.
 const root = resolve('../..')
 const chat = JSON.parse(await readFile(resolve(root, 'Gemini Gmail Assistant with Chat Memory.json'), 'utf8'))
-const jobs = JSON.parse(await readFile(resolve(root, 'PH WFH Job Search + Auto Gemini Gmail Drafts - Fixed (1).json'), 'utf8'))
+const jobs = JSON.parse(await readFile(process.argv[2] ?? 'C:/Users/User/Downloads/PH-WFH JOB FINDER-AI LIMITED VERSION AI.json', 'utf8'))
 const stages = [
   {
     file: 'gmail-assistant', workflow: chat, title: 'Gemini Gmail assistant', subtitle: 'Natural-language requests, session memory, and an email tool.',
@@ -16,23 +16,38 @@ const stages = [
     },
   },
   {
-    file: 'job-discovery', workflow: jobs, title: '01 / Discover and track remote jobs', subtitle: 'Manual or scheduled runs fetch, rank, deduplicate, and save job listings.',
+    file: 'job-finder-overview', workflow: jobs, title: 'PH WFH Job Finder / Full workflow',
+    subtitle: 'Structure from the supplied AI Limited Version export. Job discovery and draft scanning run independently.',
+    width: 3500, height: 1600,
+    layout: Object.fromEntries(jobs.nodes.filter(node => !node.type.includes('stickyNote')).map(node => [node.name, [50 + (node.position[0] - 240) * 1.4, 180 + (node.position[1] - 560) * 1.1]])),
+  },
+  {
+    file: 'job-search-schedule', workflow: jobs, title: '01 / Independent search scheduling', subtitle: 'Two-minute ticks check an eight-hour search gate; manual runs bypass the gate.',
     layout: {
-      'Manual Run': [50, 180], 'Every Morning at 8': [50, 470], 'Fetch Free Remote Jobs': [350, 300],
-      'Filter WFH and Rank Matches': [650, 300], 'Google Sheets - Existing Jobs': [950, 300],
-      'Keep Only Untracked Jobs': [650, 590], 'Google Sheets - Append New Jobs': [950, 590],
+      'Scan Google Sheets Every 2 Minutes': [50, 180], 'Decide Whether To Search Jobs': [350, 180],
+      'IF Automatic Job Search Due': [650, 180], 'Manual Run': [650, 500], 'Fetch Free Remote Jobs': [950, 500],
     },
   },
   {
-    file: 'application-writing', workflow: jobs, title: '02 / Prepare application emails', subtitle: 'Read eligible tracker rows and use Gemini to produce a subject and message.',
+    file: 'job-discovery', workflow: jobs, title: '02 / Three sources, one job tracker', subtitle: 'Remotive, Himalayas, and Jobicy feed ranked listings into Google Sheets.',
     layout: {
-      'Manual Run': [50, 180], 'Every Morning at 8': [50, 470], 'Google Sheets - Read Rows to Draft': [350, 300],
-      'Choose One Row to Draft': [650, 300], 'Gemini AI - Write Application Email': [950, 300],
-      'Google Gemini Chat Model - Free Tier': [950, 590], 'Parse Gemini Email JSON': [650, 590],
+      'Fetch Free Remote Jobs': [50, 180], 'Fetch Himalayas Remote Jobs': [350, 180],
+      'Fetch Jobicy Remote Jobs': [650, 180], 'Filter WFH and Rank Matches': [950, 180],
+      'Google Sheets - Existing Jobs': [50, 530], 'Keep Only Untracked Jobs': [350, 530],
+      'Google Sheets - Append New Jobs': [650, 530], 'Job Import Summary - Awaiting Review': [950, 530],
     },
   },
   {
-    file: 'resume-drafts', workflow: jobs, title: '03 / Attach the resume and save a draft', subtitle: 'Validate the PDF, create a Gmail draft, and record its ID in the tracker.',
+    file: 'application-writing', workflow: jobs, title: '03 / Review first, then prepare drafts', subtitle: 'Scan every two minutes for Ready to Draft rows with a valid employer email.',
+    layout: {
+      'Scan Google Sheets Every 2 Minutes': [50, 180], 'Monitor Sheet Scan': [350, 180],
+      'Google Sheets - Read Rows to Draft': [650, 180], 'Choose One Row to Draft': [950, 180],
+      'Gemini AI - Write Application Email': [650, 530], 'Google Gemini Chat Model - Free Tier': [350, 530],
+      'Parse Gemini Email JSON': [950, 530],
+    },
+  },
+  {
+    file: 'resume-drafts', workflow: jobs, title: '04 / Attach the resume and save a draft', subtitle: 'Validate the PDF, create a Gmail draft, and update the tracker to Draft Ready.',
     layout: {
       'Parse Gemini Email JSON': [50, 260], 'Google Drive - Resume for Draft': [350, 260],
       'Validate Resume PDF - Draft': [650, 260], 'Gmail - Create Resume Draft': [950, 260],
@@ -50,6 +65,7 @@ function lines(text, max = 18) {
   return result
 }
 function platform(node) {
+  if (node.type === 'n8n-nodes-base.if') return ['Condition', '?', '#e78440']
   if (node.type.includes('Gemini')) return ['Gemini', '✦', '#8b6be8']
   if (node.type.includes('agent') || node.type.includes('chainLlm')) return ['AI', '✦', '#8b6be8']
   if (node.type.includes('gmail')) return ['Gmail', 'M', '#d95745']
@@ -61,7 +77,7 @@ function platform(node) {
   return ['Trigger', '↯', '#e78440']
 }
 function svg(stage) {
-  const width = 1240, height = 840, nodeWidth = 230, nodeHeight = 150
+  const width = stage.width ?? 1240, height = stage.height ?? 840, nodeWidth = 230, nodeHeight = 150
   let edges = ''
   for (const [source, groups] of Object.entries(stage.workflow.connections)) {
     if (!stage.layout[source]) continue
@@ -90,7 +106,7 @@ function svg(stage) {
     const label = lines(name)
     return `<g transform="translate(${x} ${y})"><rect width="${nodeWidth}" height="${nodeHeight}" rx="18" fill="#202c3d" stroke="#465870" stroke-width="1.5"/><rect x="16" y="16" width="42" height="42" rx="12" fill="${accent}"/><text x="37" y="45" text-anchor="middle" font-size="25" font-weight="700" fill="white">${mark}</text><text x="72" y="42" fill="#a8b9ce" font-size="17" font-weight="600">${badge}</text><text x="17" y="84" fill="#f4f6fa" font-size="18" font-weight="600">${label.map((line,i) => `<tspan x="17" dy="${i ? 24 : 0}">${escape(line)}</tspan>`).join('')}</text></g>`
   }).join('')
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="Arial, sans-serif"><defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#3a4657"/></pattern><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10" fill="#91a6bb"/></marker></defs><rect width="100%" height="100%" fill="#121b28"/><rect width="100%" height="100%" fill="url(#grid)"/><text x="50" y="43" fill="#ff9770" font-size="16" font-weight="700" letter-spacing="2">n8n / AUTOMATION WORKFLOW</text><text x="50" y="88" fill="#f4f6fa" font-size="32" font-weight="700">${escape(stage.title)}</text><text x="50" y="121" fill="#a8b9ce" font-size="18">${escape(stage.subtitle)}</text>${edges}${nodes}<text x="50" y="808" fill="#8ea0b8" font-size="15">Exported workflow structure · Solid: workflow steps · Dashed: AI connections</text></svg>`
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" font-family="Arial, sans-serif"><defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#3a4657"/></pattern><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 10 5 0 10" fill="#91a6bb"/></marker></defs><rect width="100%" height="100%" fill="#121b28"/><rect width="100%" height="100%" fill="url(#grid)"/><text x="50" y="43" fill="#ff9770" font-size="16" font-weight="700" letter-spacing="2">n8n / AUTOMATION WORKFLOW</text><text x="50" y="88" fill="#f4f6fa" font-size="32" font-weight="700">${escape(stage.title)}</text><text x="50" y="121" fill="#a8b9ce" font-size="18">${escape(stage.subtitle)}</text>${edges}${nodes}<text x="50" y="${height - 32}" fill="#8ea0b8" font-size="15">Exported workflow structure · Solid: workflow steps · Dashed: AI connections</text></svg>`
 }
 await mkdir('public/images/workflows', { recursive: true })
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
@@ -98,10 +114,11 @@ try {
   const page = await browser.newPage({ viewport: { width: 1240, height: 840 }, deviceScaleFactor: 2 })
   for (const stage of stages) {
     const markup = svg(stage)
+    await page.setViewportSize({ width: stage.width ?? 1240, height: stage.height ?? 840 })
     await writeFile(`public/images/workflows/${stage.file}.svg`, markup)
     await page.setContent(`<html><body style="margin:0">${markup}</body></html>`)
     await page.screenshot({ path: `public/images/workflows/${stage.file}.png` })
-    console.log(`${stage.file}: ${Object.keys(stage.layout).length} source nodes, 2480 × 1680 screenshot`)
+    console.log(`${stage.file}: ${Object.keys(stage.layout).length} source nodes, ${(stage.width ?? 1240) * 2} × ${(stage.height ?? 840) * 2} screenshot`)
   }
 } finally {
   await browser.close()

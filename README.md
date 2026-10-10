@@ -33,6 +33,10 @@ npm run preview
 
 The build typechecks the app and writes production files to `dist/`. Hosting must route application paths such as `/projects` and `/showcase` to `index.html`.
 
+### Vercel deployment
+
+Use `adam-port/portfolio-template-main` as the Root Directory if deploying the entire workspace, or the repository root if deploying AdamPortfolio directly. Select Vite, build with `npm run build`, and use `dist` as the Output Directory. The included `vercel.json` rewrites application routes to `index.html`, allowing direct visits and refreshes on `/projects` and other React Router pages. Redeploy after uploading or pushing this configuration; existing deployments do not receive local edits automatically.
+
 ## Update content
 
 - Profile, introduction, contact details, and social links: `src/data/profile.ts`
@@ -41,7 +45,9 @@ The build typechecks the app and writes production files to `dist/`. Hosting mus
 - Images, workflow previews, and resume: `public/`
 - Shared preview and card styling: `src/styles/portfolio-ui.css`
 
-Generated workflow images are included. Regenerating them with `scripts/capture-workflows.mjs` requires the original n8n JSON exports in the external references folder used during development. Those exports are not included in this repository.
+Generated workflow diagrams and screenshots are included. `node scripts/capture-workflows.mjs "<path-to-updated-workflow.json>"` renders the updated PH WFH workflow; the original Gemini Gmail Assistant export must also exist two directories above the checkout. Diagrams show node labels and connections, not live n8n executions. Raw exports and their credentials are not published.
+
+The Joblink gallery features live 4K (3840 x 2160) dashboard, job-search, and news screenshots. Run `node scripts/capture-joblink-authenticated.mjs` and sign in interactively to refresh them. Its dedicated browser profile is ignored by Git. `node scripts/capture-joblink.mjs` captures the public desktop and mobile sign-in screens included as additional views; authenticated screenshots are retained separately. The workbook gallery is a rendered excerpt of JOBHACK2026 (1).xlsx, with job metadata and snapshot status counts; it is not a screenshot of the Google Sheets interface. Email addresses, application messages, and draft IDs are excluded from the public excerpt.
 
 The contact form opens the visitor's email application by default. An optional backend can be configured with `VITE_CONTACT_ENDPOINT`.
 
