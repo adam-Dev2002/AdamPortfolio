@@ -39,12 +39,12 @@ try {
       'https://5splumbing.com/',
     )
     await views.nth(0).click()
-    await dialog.getByRole('button', { name: 'Zoom in' }).click()
-    await dialog
-      .getByRole('button', { name: 'Reset image zoom' })
-      .filter({ hasText: '125%' })
-      .waitFor()
-    await dialog.getByRole('button', { name: 'Reset image zoom' }).click()
+    await dialog.getByRole('button', { name: 'Open fullscreen' }).click()
+    const fullscreen = page.locator('dialog.image-lightbox')
+    await fullscreen.getByRole('button', { name: 'Zoom in', exact: true }).click()
+    await fullscreen.locator('.image-lightbox__percentage').filter({ hasText: '125%' }).waitFor()
+    await fullscreen.getByRole('button', { name: 'Fit width', exact: true }).click()
+    await fullscreen.getByRole('button', { name: 'Close fullscreen image', exact: true }).click()
     await page.screenshot({ path: `docs/screenshots/plumbing-${viewport.width}-gallery.png` })
     await dialog.getByRole('button', { name: 'Close preview' }).click()
     console.log(

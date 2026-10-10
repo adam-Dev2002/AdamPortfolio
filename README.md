@@ -9,6 +9,7 @@ Adam R. Romas's personal portfolio, focused on AI engineering, n8n automation, w
 - Accessibility controls for enlarged text, high contrast, reduced motion, and underlined links.
 - Colored tool icons, including Vercel for project deployment.
 - Project galleries with back/close controls, zoom, and scroll restoration.
+- Click any gallery image to open a fullscreen viewer with a translucent backdrop, zoom buttons, Ctrl/Cmd + scroll zoom, drag-to-pan, and Fit width. Close with Escape, the close button, or the background to return to the same gallery image.
 - HD workflow diagrams and explanations derived from n8n exports.
 - FU Media demo video, 5S Plumbing website, restaurant app designs, and pet shop business card.
 - Resume download and LinkedIn, Facebook, Upwork, and GitHub links.

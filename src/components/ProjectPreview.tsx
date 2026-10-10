@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { ArrowLeft, ArrowUpRight, MagnifyingGlassMinus, MagnifyingGlassPlus, X } from '@/components/slab'
+import { ArrowLeft, ArrowUpRight, X } from '@/components/slab'
+import ImageLightbox from './ImageLightbox'
 import type { PortfolioProject } from '@/data/portfolio'
 import { SCROLLER_ID } from '@/hooks/useLenis'
 
@@ -8,7 +9,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
   const dialogRef = useRef<HTMLDialogElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const [frame, setFrame] = useState(0)
-  const [zoom, setZoom] = useState(1)
+  const [fullscreen, setFullscreen] = useState(false)
   const gallery = project.gallery ?? [{ src: project.imageSrc!, alt: project.imageAlt ?? project.title, label: 'Preview' }]
   const previewWidth = gallery[frame].previewWidth ?? project.previewWidth
 
@@ -69,15 +70,11 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
           <div className="project-preview__toolbar">
             <div className="project-preview__tabs" aria-label="Project views">
               {gallery.map((image, index) => (
-                <button key={image.src} className="preview-control" aria-pressed={frame === index} onClick={() => { setFrame(index); setZoom(1); stageRef.current?.scrollTo({ top: 0, left: 0 }) }}>{image.label}</button>
+                <button key={image.src} className="preview-control" aria-pressed={frame === index} onClick={() => { setFrame(index); stageRef.current?.scrollTo({ top: 0, left: 0 }) }}>{image.label}</button>
               ))}
             </div>
-            <div className="project-preview__zoom" aria-label="Image zoom">
-              <button className="preview-control preview-control--icon" aria-label="Zoom out" disabled={zoom <= 0.5} onClick={() => setZoom(z => Math.max(0.5, z - 0.25))}><MagnifyingGlassMinus size={18} /></button>
-              <button className="preview-control" aria-label="Reset image zoom" onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</button>
-              <button className="preview-control preview-control--icon" aria-label="Zoom in" disabled={zoom >= 2} onClick={() => setZoom(z => Math.min(2, z + 0.25))}><MagnifyingGlassPlus size={18} /></button>
-            </div>
-            {previewWidth && <span className="project-preview__pan-hint">Scroll to explore the image</span>}
+            <button className="preview-control" onClick={() => setFullscreen(true)}>Open fullscreen</button>
+            <span className="project-preview__pan-hint">Click the image to open fullscreen</span>
           </div>
         )}
         <div ref={stageRef} tabIndex={0} role="region" aria-label="Scrollable project preview" className={`project-preview__stage${project.gallery && project.title === 'Restaurant App' ? ' project-preview__stage--phone' : ''}`}>
@@ -86,8 +83,10 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
               <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}`} title={`${project.title} project demo`} referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
             </div>
           ) : (
-            <div className="project-preview__image" style={{ width: previewWidth ? `${previewWidth * zoom}px` : `${zoom * 100}%`, maxWidth: project.title === 'Restaurant App' ? `${600 * zoom}px` : undefined }}>
-              <img src={gallery[frame].src} alt={gallery[frame].alt} />
+            <div className="project-preview__image" style={{ width: previewWidth ? `${previewWidth}px` : '100%', maxWidth: project.title === 'Restaurant App' ? '600px' : undefined }}>
+              <button className="project-preview__open-image" aria-label={`Open ${gallery[frame].label} image fullscreen`} onClick={() => setFullscreen(true)}>
+                <img src={gallery[frame].src} alt={gallery[frame].alt} />
+              </button>
             </div>
           )}
         </div>
@@ -96,6 +95,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
           {project.external && <a className="preview-control" href={project.href} target="_blank" rel="noopener noreferrer">{project.linkLabel}<ArrowUpRight size={16} /></a>}
         </footer>
       </div>
+      {fullscreen && <ImageLightbox src={gallery[frame].src} alt={gallery[frame].alt} title={`${project.title} · ${gallery[frame].label}`} onClose={() => setFullscreen(false)} />}
     </dialog>,
     document.body,
   )
