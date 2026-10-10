@@ -39,6 +39,19 @@ try {
   await page.getByText('News & events', { exact: true }).first().click()
   await page.getByText('Ideas for your next chapter.', { exact: true }).waitFor()
   await capture('joblink-news')
+  for (const [label, file] of [
+    ['Applications', 'joblink-applications'],
+    ['Task board', 'joblink-tasks'],
+    ['Calendar', 'joblink-calendar'],
+    ['Links', 'joblink-links'],
+    ['Sheet', 'joblink-sheet'],
+    ['Settings', 'joblink-settings'],
+  ]) {
+    await page.getByText(label, { exact: true }).first().click()
+    await page.waitForLoadState('domcontentloaded')
+    await capture(file)
+    console.log(`${label}: ${(await page.locator('main').innerText().catch(() => page.locator('body').innerText())).slice(0, 3000)}`)
+  }
   console.log('All authenticated Joblink screenshots captured successfully.')
 } finally {
   await context.close()
