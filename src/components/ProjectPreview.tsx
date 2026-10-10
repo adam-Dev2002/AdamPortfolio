@@ -8,6 +8,7 @@ import { SCROLLER_ID } from '@/hooks/useLenis'
 export default function ProjectPreview({ project, onClose }: { project: PortfolioProject; onClose: () => void }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
+  const fullscreenTriggerRef = useRef<HTMLButtonElement | null>(null)
   const [frame, setFrame] = useState(0)
   const [fullscreen, setFullscreen] = useState(false)
   const gallery = project.gallery ?? [{ src: project.imageSrc!, alt: project.imageAlt ?? project.title, label: 'Preview' }]
@@ -54,13 +55,13 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
   return createPortal(
     <dialog
       ref={dialogRef}
-      className="project-preview"
+      className={`project-preview${fullscreen ? ' project-preview--fullscreen' : ''}`}
       aria-labelledby="preview-title"
       onCancel={(event) => { event.preventDefault(); onClose() }}
       onClick={(event) => { if (event.target === event.currentTarget) onClose() }}
       data-lenis-prevent
     >
-      <div className="project-preview__panel">
+      <div className="project-preview__panel" style={{ display: fullscreen ? 'none' : undefined }}>
         <header className="project-preview__header">
           <button className="preview-control" onClick={onClose} autoFocus><ArrowLeft size={18} /> Back</button>
           <h2 id="preview-title">{project.title}</h2>
@@ -73,7 +74,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
                 <button key={image.src} className="preview-control" aria-pressed={frame === index} onClick={() => { setFrame(index); stageRef.current?.scrollTo({ top: 0, left: 0 }) }}>{image.label}</button>
               ))}
             </div>
-            <button className="preview-control" onClick={() => setFullscreen(true)}>Open fullscreen</button>
+            <button className="preview-control" onClick={event => { fullscreenTriggerRef.current = event.currentTarget; setFullscreen(true) }}>Open fullscreen</button>
             <span className="project-preview__pan-hint">Click the image to open fullscreen</span>
           </div>
         )}
@@ -84,7 +85,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
             </div>
           ) : (
             <div className="project-preview__image" style={{ width: previewWidth ? `${previewWidth}px` : '100%', maxWidth: project.title === 'Restaurant App' ? '600px' : undefined }}>
-              <button className="project-preview__open-image" aria-label={`Open ${gallery[frame].label} image fullscreen`} onClick={() => setFullscreen(true)}>
+              <button className="project-preview__open-image" aria-label={`Open ${gallery[frame].label} image fullscreen`} onClick={event => { fullscreenTriggerRef.current = event.currentTarget; setFullscreen(true) }}>
                 <img src={gallery[frame].src} alt={gallery[frame].alt} />
               </button>
             </div>
@@ -95,7 +96,7 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
           {project.external && <a className="preview-control" href={project.href} target="_blank" rel="noopener noreferrer">{project.linkLabel}<ArrowUpRight size={16} /></a>}
         </footer>
       </div>
-      {fullscreen && <ImageLightbox src={gallery[frame].src} alt={gallery[frame].alt} title={`${project.title} · ${gallery[frame].label}`} onClose={() => setFullscreen(false)} />}
+      {fullscreen && <ImageLightbox src={gallery[frame].src} alt={gallery[frame].alt} title={`${project.title} · ${gallery[frame].label}`} returnFocus={fullscreenTriggerRef.current} onClose={() => setFullscreen(false)} />}
     </dialog>,
     document.body,
   )

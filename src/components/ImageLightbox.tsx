@@ -8,11 +8,13 @@ export default function ImageLightbox({
   src,
   alt,
   title,
+  returnFocus,
   onClose,
 }: {
   src: string
   alt: string
   title: string
+  returnFocus?: HTMLElement | null
   onClose: () => void
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
@@ -53,7 +55,7 @@ export default function ImageLightbox({
 
   useEffect(() => {
     const dialog = dialogRef.current!
-    const trigger = document.activeElement as HTMLElement | null
+    const trigger = returnFocus ?? document.activeElement as HTMLElement | null
     dialog.showModal()
     const stage = stageRef.current!
     const measure = () => setWidth(Math.max(1, stage.clientWidth - 48))

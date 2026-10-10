@@ -20,6 +20,7 @@ try {
     await trigger.click()
     const viewer = page.locator('dialog.image-lightbox')
     await viewer.locator('img').evaluate((img) => img.decode())
+    assert.equal(await gallery.locator('.project-preview__panel').evaluate(el => getComputedStyle(el).display), 'none', 'Fullscreen must hide the previous gallery image immediately')
     const bounds = await viewer.evaluate((el) => {
       const rect = el.getBoundingClientRect()
       return {

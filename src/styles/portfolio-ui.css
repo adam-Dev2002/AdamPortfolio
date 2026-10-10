@@ -81,6 +81,9 @@
   overflow: visible;
 }
 .project-preview::backdrop { background: var(--preview-dim); }
+.project-preview--fullscreen { background: transparent; border-color: transparent; box-shadow: none; }
+.project-preview--fullscreen::backdrop { background: transparent; }
+.project-preview--fullscreen > .project-preview__panel { display: none; }
 .project-preview__panel { display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: inherit; }
 .project-preview__header { display: flex; flex: none; align-items: center; gap: 16px; justify-content: space-between; padding: 16px 22px; border-bottom: 1px solid var(--line); background: var(--surface-card); }
 .project-preview__header h2 { font-size: clamp(16px, 2vw, 23px); line-height: 1.25; text-align: center; }
