@@ -64,6 +64,20 @@
 .portfolio-card__description, .portfolio-showcase .portfolio-card__description { font-size: 14px; line-height: 1.6; display: block; }
 .portfolio-card__link, .portfolio-showcase .portfolio-card__link { font-size: 13px; margin-top: auto; padding-top: 4px; color: var(--orange-ink); }
 .portfolio-card__details { font-size: 13px; }
+.portfolio-card--featured { border-color: var(--orange); }
+.portfolio-card__featured {
+  align-self: flex-start;
+  padding: 5px 9px;
+  border: 1px solid var(--orange);
+  border-radius: 999px;
+  color: var(--orange-ink);
+  background: var(--tint);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.portfolio-card__tools { display: flex; flex-wrap: wrap; gap: 6px; margin-block: 4px; }
+.portfolio-card__tools > span { padding: 4px 8px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); font-size: 11px; line-height: 1.4; }
 .project-preview {
   position: fixed;
   inset: 0;

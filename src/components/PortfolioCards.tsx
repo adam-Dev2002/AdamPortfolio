@@ -12,7 +12,7 @@ export default function PortfolioCards({ showDetails = false }: { showDetails?: 
         <button
           type="button"
           key={project.title}
-          className="portfolio-card"
+          className={`portfolio-card${project.featured ? ' portfolio-card--featured' : ''}`}
           onClick={() => setSelected(index)}
           aria-haspopup="dialog"
           aria-label={`Preview ${project.title}`}
@@ -29,9 +29,11 @@ export default function PortfolioCards({ showDetails = false }: { showDetails?: 
             </span>
           )}
           <span className="portfolio-card__body">
+            {project.featured && <span className="portfolio-card__featured">Featured n8n project</span>}
             <span className="portfolio-card__category">{project.category}</span>
             <span className="portfolio-card__title">{project.title}</span>
             <span className="portfolio-card__description">{project.description}</span>
+            {project.tools && <span className="portfolio-card__tools" aria-label="Tools used">{project.tools.map(tool => <span key={tool}>{tool}</span>)}</span>}
             {showDetails && <span className="portfolio-card__details">{project.details}</span>}
             <span className="portfolio-card__link">
               {project.videoId ? 'Watch demo' : 'Explore project'}

@@ -2,6 +2,55 @@ import type { PortfolioProject } from './portfolio'
 
 export const workflowProjects: PortfolioProject[] = [
   {
+    title: 'AI Customer Support & Lead CRM',
+    featured: true,
+    category: 'n8n · Customer support & lead automation',
+    description: 'Turn customer emails into reply drafts, capture inquiries in a simple CRM, and follow up with interested leads.',
+    details: 'Designed for service businesses: Gemini prepares support replies in Gmail for your team to review, while a customer form saves validated inquiries to Google Sheets. Duplicate checks keep the CRM organized, and optional acknowledgments and owner alerts help your team respond. An hourly check finds open leads due for a follow-up, with customer permission and a configurable 24-hour delay. Built to reduce repetitive admin and keep inquiries moving.',
+    tools: ['n8n', 'Gemini', 'Gmail', 'Google Sheets'],
+    imageSrc: '/images/workflows/customer-support-overview.png',
+    imageAlt: 'Three-part n8n workflow overview: AI support drafts, lead capture CRM, and consent-based follow-ups',
+    imageFit: 'contain',
+    href: '/images/workflows/customer-support-overview.png',
+    linkLabel: 'Explore workflow',
+    gallery: [
+      {
+        src: '/images/workflows/customer-support-overview.png',
+        alt: 'Client-friendly overview of customer support, lead capture, and follow-up automation',
+        label: 'At a glance',
+        caption: 'One n8n project connects customer support and lead management. Prepare replies for review, organize new inquiries in Google Sheets, and follow up with customers who gave permission. Overview rendered from the supplied workflow export.',
+      },
+      {
+        src: '/images/workflows/customer-support-drafts.png',
+        alt: 'Connected support nodes from scheduled Gmail checks through Gemini to reviewed Gmail drafts',
+        label: 'Support drafts',
+        previewWidth: 1400,
+        caption: 'Gmail checks incoming emails, screens automated messages, and passes eligible requests to Gemini. Replies are saved as drafts for your team to review and send. Sensitive requests are labeled for attention. This view shows the connected Gemini route in the export.',
+      },
+      {
+        src: '/images/workflows/customer-support-leads.png',
+        alt: 'Customer form validation, duplicate checks, optional Gemini classification, Google Sheets CRM, and Gmail notifications',
+        label: 'Lead capture',
+        previewWidth: 1400,
+        caption: 'A customer form collects the inquiry and follow-up permission. The workflow checks the details, filters duplicate submissions, and saves the lead to Google Sheets. Optional Gemini classification adds a category and priority; enabled emails acknowledge the inquiry and notify the owner.',
+      },
+      {
+        src: '/images/workflows/customer-support-followups.png',
+        alt: 'Hourly schedule reads open leads, checks consent and due dates, reserves follow-up, sends email, and records the result',
+        label: 'Follow-ups',
+        previewWidth: 1400,
+        caption: 'An hourly check finds open leads whose follow-up is due and who gave permission. It reserves the follow-up, sends an email when enabled, and logs the result in Sheets. The supplied configuration uses a 24-hour delay; marking a lead Contacted removes it from future follow-up checks.',
+      },
+      {
+        src: '/images/workflows/customer-support-full.png',
+        alt: 'All 57 automation nodes and their exported connections in the customer support and lead CRM workflow',
+        label: 'Full workflow',
+        previewWidth: 3600,
+        caption: 'Detailed map of all 57 automation nodes, preserving the supplied positions and connections. Zoom or pan to inspect the structure. These are rendered workflow diagrams, not screenshots of a live execution; some alternate AI nodes are present without an incoming connection.',
+      },
+    ],
+  },
+  {
     title: 'Gemini Gmail Assistant',
     category: 'n8n · AI email automation',
     description: 'A conversational email assistant with Gemini, Gmail, and session memory.',

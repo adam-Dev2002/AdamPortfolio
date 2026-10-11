@@ -3,6 +3,8 @@ import { plumbingGallery } from './plumbing'
 
 export type PortfolioProject = {
   title: string
+  featured?: boolean
+  tools?: string[]
   category: string
   description: string
   details: string
