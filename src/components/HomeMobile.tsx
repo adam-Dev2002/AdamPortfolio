@@ -46,7 +46,7 @@ export function HomeStats() {
 }
 
 const TILES = [
-  { n: '01', label: 'Projects', to: '/projects', title: 'Selected work', desc: 'Web, AI, and design projects.', img: '/images/5s-plumbing.jpg' },
+  { n: '01', label: 'Projects', to: '/projects', title: 'Selected work', desc: 'Mobile, web, AI, and design projects.', img: '/images/closeby/closeby-overview.png' },
   { n: '02', label: 'Skills', to: '/services', title: 'Web & IT', desc: 'Development, computer vision, and support.', Icon: Stack },
   { n: '03', label: 'Portfolio', to: '/showcase', title: 'Watch FU Media', desc: 'AI-powered media file management demo.', Icon: Coffee, accent: true },
   { n: '04', label: 'Experience', to: '/testimonials', title: 'TTEC & Inspiro', desc: 'Customer service and IT support.', img: profile.avatarSrc },

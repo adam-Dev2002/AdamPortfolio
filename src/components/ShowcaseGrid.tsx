@@ -15,7 +15,7 @@ export default function ShowcaseGrid() {
           A closer look at my work.
         </h1>
         <p className="pgrid__lede">
-          Explore my n8n workflows, watch the FU Media demo, and view my web and design projects.
+          Explore my mobile apps and n8n workflows, watch the FU Media demo, and view my web and design projects.
         </p>
       </header>
 

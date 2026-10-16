@@ -1,4 +1,5 @@
 import { Briefcase, SealCheck, GraduationCap, type Icon } from '@/components/slab'
+import { portfolioProjects } from './portfolio'
 
 export type SocialLink = {
   label: string
@@ -41,7 +42,7 @@ export const profile: Profile = {
   resumeSrc: '/Adam-Resume-2026.pdf',
   location: 'Dumaguete City, Philippines',
   stats: [
-    { value: '6', label: 'Selected projects', Icon: Briefcase },
+    { value: String(portfolioProjects.length), label: 'Selected projects', Icon: Briefcase },
     { value: '3', label: 'Certifications', Icon: SealCheck },
     { value: 'BSIT', label: 'Foundation University', Icon: GraduationCap },
   ],

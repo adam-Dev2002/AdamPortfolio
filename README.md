@@ -12,6 +12,7 @@ Adam R. Romas's personal portfolio, focused on AI engineering, n8n automation, w
 - Click any gallery image to open a fullscreen viewer with a translucent backdrop, zoom buttons, Ctrl/Cmd + scroll zoom, drag-to-pan, and Fit width. Close with Escape, the close button, or the background to return to the same gallery image.
 - HD workflow diagrams and explanations derived from n8n exports.
 - FU Media demo video, 5S Plumbing website, restaurant app designs, and pet shop business card.
+- Closeby mobile app with its React Native / Expo stack, screenshot gallery, and GitHub source link.
 - Resume download and LinkedIn, Facebook, Upwork, and GitHub links.
 
 ## Run locally
@@ -50,6 +51,8 @@ Use `adam-port/portfolio-template-main` as the Root Directory if deploying the e
 Generated workflow diagrams and screenshots are included. `node scripts/capture-workflows.mjs "<path-to-updated-workflow.json>"` renders the updated PH WFH workflow; the original Gemini Gmail Assistant export must also exist two directories above the checkout. Diagrams show node labels and connections, not live n8n executions. Raw exports and their credentials are not published.
 
 The featured **AI Customer Support & Lead CRM** n8n project includes a client-friendly overview, support drafts, lead capture, consent-based follow-ups, and a detailed 57-node map. Refresh its five gallery images with `node scripts/capture-customer-support.mjs "<path-to-workflow.json>"`. This renderer publishes only node labels, types, positions, and connections; account details and parameters are excluded. The presentation describes the supplied design without claiming a verified live deployment or measured business results.
+
+Closeby appears in Projects and Showcase, with a screenshot composition on the homepage. Its seven gallery views include four fresh local browser captures, the repository's original Android map and browser history captures, and an overview composed from real app screens. Each caption identifies its source. Screenshots and pinned source provenance live in `public/images/closeby/`. To refresh, start a local-only Closeby web preview with `EXPO_NO_DOTENV=1`, then run `node scripts/capture-closeby.mjs http://127.0.0.1:8085` from this portfolio. The script uses a fixed test GPS location, blocks cloud account/database requests, and retains the original map/history captures; it needs internet to retrieve those pinned images and Chrome for Playwright. The source link points to [adam-Dev2002/closeby](https://github.com/adam-Dev2002/closeby).
 
 The Joblink gallery features live 4K (3840 x 2160) screenshots of all nine workspace pages: dashboard, job search, news, applications, task board, calendar, links, sheet, and account settings. Run `node scripts/capture-joblink-authenticated.mjs` and sign in interactively to refresh them. Its dedicated browser profile is ignored by Git. `node scripts/capture-joblink.mjs` captures the public desktop and mobile sign-in screens included as additional views; authenticated screenshots are retained separately. The workbook gallery is a rendered excerpt of JOBHACK2026 (1).xlsx, with job metadata and snapshot status counts; it is not a screenshot of the Google Sheets interface. Email addresses, application messages, and draft IDs are excluded from the public excerpt.
 

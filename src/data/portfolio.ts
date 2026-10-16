@@ -24,6 +24,28 @@ export type PortfolioProject = {
 export const portfolioProjects: PortfolioProject[] = [
   ...workflowProjects,
   {
+    title: 'Closeby',
+    category: 'Mobile app · GPS & location sharing',
+    tools: ['React Native', 'Expo', 'TypeScript', 'Firebase'],
+    description: 'Find your phone, record trips, and choose to share your location with family or friends.',
+    details: 'Built for Android and iOS with React Native and Expo. Closeby brings GPS maps, trip history, saved places, speed alerts, and private family spaces into a dark mobile interface. Location and history sharing are opt-in, and local GPS works without an account. Shared spaces and chat use a configured Firebase backend. Explore the app screenshots, then visit GitHub for source code and setup instructions.',
+    imageSrc: '/images/closeby/closeby-overview.png',
+    imageAlt: 'Closeby overview composed from actual mobile app screenshots',
+    imageFit: 'contain',
+    href: 'https://github.com/adam-Dev2002/closeby',
+    linkLabel: 'View Closeby on GitHub',
+    external: true,
+    gallery: [
+      { src: '/images/closeby/closeby-overview.png', alt: 'Closeby overview composed from actual mobile app screenshots', label: 'Overview', caption: 'A presentation composed from real Closeby app captures. Explore the individual screens for GPS maps, activity history, private spaces, safety controls, and settings. Locations and routes shown in this gallery are local test data.' },
+      { src: '/images/closeby/closeby-map.png', alt: 'Closeby Android emulator showing a satellite map, GPS status, and My Phone device card', label: 'Android map', previewWidth: 320, caption: 'Android emulator screenshot from the Closeby repository. The satellite map, GPS status, phone battery, accuracy, and trip controls show the app with an emulator-supplied test location, not a physical phone location.' },
+      { src: '/images/closeby/closeby-history.png', alt: 'Closeby History and Activity with a local test route, daily distance, duration, stops, and timeline', label: 'Activity history', previewWidth: 320, caption: 'Browser screenshot from the Closeby repository showing History & Activity with local test data. Member selection, daily distance and duration, a route map, and a movement/stop timeline demonstrate the interface. Names and routes shown are test fixtures.' },
+      { src: '/images/closeby/closeby-spaces.png', alt: 'Closeby private Spaces screen captured in local browser mode', label: 'Spaces', previewWidth: 320, caption: 'Fresh local browser capture of Spaces. A configured Firebase account is required to create or join a private space, share locations with members, and use group chat. This local preview does not connect to a live family space.' },
+      { src: '/images/closeby/closeby-safety.png', alt: 'Closeby Safety screen with speed, trip distance, and emergency alert controls', label: 'Safety', previewWidth: 320, caption: 'Fresh local browser capture of Safety with a fixed test GPS location. The interface brings speed, trip distance, and emergency alert controls together. Shared emergency alerts require a configured Firebase backend.' },
+      { src: '/images/closeby/closeby-settings.png', alt: 'Closeby Settings with profile controls, speed alert toggle, speed limit, and emergency alert settings', label: 'Settings', previewWidth: 320, caption: 'Fresh local browser capture of Settings and speed controls. The visible screen includes the local profile, optional speed alerts, an 80 km/h speed limit, and entry points for emergency alerts and voice/video calls. Speed alerts are off in this preview.' },
+      { src: '/images/closeby/closeby-sign-in.png', alt: 'Closeby account sign-in screen captured in the local browser preview', label: 'Sign in', previewWidth: 320, caption: 'Fresh local browser capture of the Closeby account screen. The app supports account access alongside local GPS mode; Google and email authentication require Firebase provider configuration. No personal account was used for this capture.' },
+    ],
+  },
+  {
     title: 'Joblink Tracker',
     category: 'Web app · Job application tracking',
     description: 'A job-search workspace with applications, tasks, a calendar, and career news.',

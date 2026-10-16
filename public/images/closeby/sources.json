@@ -1,0 +1,54 @@
+{
+  "repository": "https://github.com/adam-Dev2002/closeby",
+  "sourceCommit": "926b13689a0ba86a7a0d8d0a7e944f2eeb22bf2e",
+  "browserCaptures": {
+    "sourceCommit": "926b13689a0ba86a7a0d8d0a7e944f2eeb22bf2e",
+    "source": "Unmodified isolated checkout, local Expo web preview",
+    "files": [
+      "closeby-spaces.png",
+      "closeby-safety.png",
+      "closeby-settings.png",
+      "closeby-sign-in.png"
+    ],
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 2
+    },
+    "mode": "Local device only; no account; Firebase endpoints blocked",
+    "gps": {
+      "synthetic": true,
+      "latitude": 14.55,
+      "longitude": 121.02,
+      "speed": 0,
+      "accuracy": 5
+    }
+  },
+  "originalCaptures": [
+    {
+      "filename": "closeby-map.png",
+      "kind": "original-repository-capture",
+      "sourceCommit": "926b13689a0ba86a7a0d8d0a7e944f2eeb22bf2e",
+      "sourceUrl": "https://github.com/adam-Dev2002/closeby/blob/926b13689a0ba86a7a0d8d0a7e944f2eeb22bf2e/docs/screenshots/map-android.png",
+      "sha256": "e57bb506d9c968e44372084278cbd16506d87a9d3e2dad57b8abfe6687f4599a"
+    },
+    {
+      "filename": "closeby-history.png",
+      "kind": "original-repository-capture",
+      "sourceCommit": "926b13689a0ba86a7a0d8d0a7e944f2eeb22bf2e",
+      "sourceUrl": "https://github.com/adam-Dev2002/closeby/blob/926b13689a0ba86a7a0d8d0a7e944f2eeb22bf2e/docs/activity-history-web.png",
+      "sha256": "e79bd247e4aae3f42aebb77e975e2320f0f4b67e8c0806aa7f255e999fba4618"
+    }
+  ],
+  "overview": {
+    "filename": "closeby-overview.png",
+    "width": 1600,
+    "height": 1000,
+    "kind": "CSS composition of real app screenshots",
+    "inputs": [
+      "closeby-map.png",
+      "closeby-history.png",
+      "closeby-safety.png"
+    ]
+  }
+}

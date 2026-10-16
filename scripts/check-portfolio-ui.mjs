@@ -20,7 +20,7 @@ try {
     await page.waitForFunction(() => !document.documentElement.classList.contains('is-intro'))
     await page.locator('a[href="/projects"]:visible').first().click()
     await page.getByRole('heading', { name: 'Projects built to be useful.' }).waitFor()
-    assert.equal(await page.locator('.portfolio-card').count(), 8)
+    assert.equal(await page.locator('.portfolio-card').count(), 9)
     const geometry = await page.locator('.portfolio-card').evaluateAll(cards => cards.map(card => {
       const image = card.querySelector('.portfolio-card__media').getBoundingClientRect()
       const body = card.querySelector('.portfolio-card__body').getBoundingClientRect()
@@ -64,7 +64,7 @@ try {
     await workflowDialog.getByRole('button', { name: 'Close preview', exact: true }).click()
     await page.reload({ waitUntil: 'networkidle' })
     await page.getByRole('heading', { name: 'Projects built to be useful.' }).waitFor()
-    assert.equal(await page.locator('.portfolio-card').count(), 8)
+    assert.equal(await page.locator('.portfolio-card').count(), 9)
     await wheelAtContent(750)
     assert(await scroll() > 0, 'Projects must scroll after navigating from Home')
     const projectButton = page.getByRole('button', { name: 'Preview Pet Shop Business Card', exact: true })
