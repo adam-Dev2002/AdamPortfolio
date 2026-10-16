@@ -36,7 +36,7 @@ export default function PortfolioCards({ showDetails = false }: { showDetails?: 
             {project.tools && <span className="portfolio-card__tools" aria-label="Tools used">{project.tools.map(tool => <span key={tool}>{tool}</span>)}</span>}
             {showDetails && <span className="portfolio-card__details">{project.details}</span>}
             <span className="portfolio-card__link">
-              {project.videoId ? 'Watch demo' : 'Explore project'}
+              Explore project
               <ArrowUpRight size={14} weight="bold" aria-hidden="true" />
             </span>
           </span>

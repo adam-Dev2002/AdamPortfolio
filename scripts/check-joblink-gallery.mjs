@@ -12,11 +12,14 @@ try {
     await page.getByRole('button', { name: 'Preview Joblink Tracker', exact: true }).click()
     const dialog = page.locator('dialog.project-preview')
     const views = dialog.locator('.project-preview__tabs button')
-    assert.equal(await views.count(), 12)
+    assert.equal(await views.count(), 13)
     for (let index = 0; index < (await views.count()); index++) {
       await views.nth(index).click()
       await dialog.locator('img').evaluate((img) => img.decode())
-      if (index < 10) {
+      if (index === 0) {
+        assert.equal(await views.nth(index).innerText(), 'Overview')
+        assert.deepEqual(await dialog.locator('img').evaluate(img => [img.naturalWidth, img.naturalHeight]), [1600, 1000])
+      } else if (index <= 10) {
         const size = await dialog
           .locator('img')
           .evaluate((img) => [img.naturalWidth, img.naturalHeight])
@@ -37,13 +40,13 @@ try {
       await dialog.getByRole('link', { name: 'Visit Joblink Tracker' }).getAttribute('href'),
       'https://joblink-tracker-c8zm.vercel.app/',
     )
-    await views.nth(0).click()
+    await dialog.getByRole('button', { name: 'Dashboard', exact: true }).click()
     await page.screenshot({
       path: `docs/screenshots/joblink-complete-${viewport.width}-preview.png`,
     })
     await dialog.getByRole('button', { name: 'Close preview' }).click()
     console.log(
-      `${viewport.width}px: all 12 gallery views, 10 four-K images, captions, layout, and live link passed`,
+      `${viewport.width}px: overview, all 12 original gallery views, 10 four-K images, captions, layout, and live link passed`,
     )
     await page.close()
   }

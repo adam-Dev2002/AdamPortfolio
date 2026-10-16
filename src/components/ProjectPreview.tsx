@@ -11,8 +11,16 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
   const fullscreenTriggerRef = useRef<HTMLButtonElement | null>(null)
   const [frame, setFrame] = useState(0)
   const [fullscreen, setFullscreen] = useState(false)
-  const gallery = project.gallery ?? [{ src: project.imageSrc!, alt: project.imageAlt ?? project.title, label: 'Preview' }]
-  const previewWidth = gallery[frame].previewWidth ?? project.previewWidth
+  const gallery = project.gallery ?? [{ src: project.imageSrc!, alt: project.imageAlt ?? project.title, label: project.videoId ? 'Demo video' : 'Preview', videoId: project.videoId }]
+  const activeFrame = gallery[frame]
+  const isOverview = activeFrame.label === 'Overview'
+  const previewWidth = isOverview ? undefined : activeFrame.previewWidth ?? project.previewWidth
+  const isPhoneScreen = project.title === 'Restaurant App' && !isOverview
+
+  const selectFrame = (index: number) => {
+    setFrame(index)
+    stageRef.current?.scrollTo({ top: 0, left: 0 })
+  }
 
   useEffect(() => {
     const dialog = dialogRef.current!
@@ -67,36 +75,38 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
           <h2 id="preview-title">{project.title}</h2>
           <button className="preview-control preview-control--icon" onClick={onClose} aria-label="Close preview"><X size={20} /></button>
         </header>
-        {!project.videoId && (
-          <div className="project-preview__toolbar">
-            <div className="project-preview__tabs" aria-label="Project views">
-              {gallery.map((image, index) => (
-                <button key={image.src} className="preview-control" aria-pressed={frame === index} onClick={() => { setFrame(index); stageRef.current?.scrollTo({ top: 0, left: 0 }) }}>{image.label}</button>
-              ))}
-            </div>
-            <button className="preview-control" onClick={event => { fullscreenTriggerRef.current = event.currentTarget; setFullscreen(true) }}>Open fullscreen</button>
-            <span className="project-preview__pan-hint">Click the image to open fullscreen</span>
+        <div className="project-preview__toolbar">
+          <div className="project-preview__tabs" aria-label="Project views">
+            {gallery.map((image, index) => (
+              <button key={image.src} className="preview-control" aria-pressed={frame === index} onClick={() => selectFrame(index)}>{image.label}</button>
+            ))}
           </div>
-        )}
-        <div ref={stageRef} tabIndex={0} role="region" aria-label="Scrollable project preview" className={`project-preview__stage${project.gallery && project.title === 'Restaurant App' ? ' project-preview__stage--phone' : ''}`}>
-          {project.videoId ? (
+          {!activeFrame.videoId && (
+            <>
+              <button className="preview-control" onClick={event => { fullscreenTriggerRef.current = event.currentTarget; setFullscreen(true) }}>Open fullscreen</button>
+              <span className="project-preview__pan-hint">Click the image to open fullscreen</span>
+            </>
+          )}
+        </div>
+        <div ref={stageRef} tabIndex={0} role="region" aria-label="Scrollable project preview" className={`project-preview__stage${isOverview ? ' project-preview__stage--overview' : ''}${isPhoneScreen ? ' project-preview__stage--phone' : ''}`}>
+          {activeFrame.videoId ? (
             <div className="portfolio-video__frame">
-              <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}`} title={`${project.title} project demo`} referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
+              <iframe src={`https://www.youtube-nocookie.com/embed/${activeFrame.videoId}`} title={`${project.title} project demo`} referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
             </div>
           ) : (
-            <div className="project-preview__image" style={{ width: previewWidth ? `${previewWidth}px` : '100%', maxWidth: project.title === 'Restaurant App' ? '600px' : undefined }}>
-              <button className="project-preview__open-image" aria-label={`Open ${gallery[frame].label} image fullscreen`} onClick={event => { fullscreenTriggerRef.current = event.currentTarget; setFullscreen(true) }}>
-                <img src={gallery[frame].src} alt={gallery[frame].alt} />
+            <div className="project-preview__image" style={{ width: previewWidth ? `${previewWidth}px` : '100%', maxWidth: isPhoneScreen ? '600px' : undefined }}>
+              <button className="project-preview__open-image" aria-label={`Open ${activeFrame.label} image fullscreen`} onClick={event => { fullscreenTriggerRef.current = event.currentTarget; setFullscreen(true) }}>
+                <img src={activeFrame.src} alt={activeFrame.alt} />
               </button>
             </div>
           )}
         </div>
         <footer className="project-preview__footer">
-          <p>{project.gallery?.[frame].caption ?? project.details}</p>
+          <p>{activeFrame.caption ?? project.details}</p>
           {project.external && <a className="preview-control" href={project.href} target="_blank" rel="noopener noreferrer">{project.linkLabel}<ArrowUpRight size={16} /></a>}
         </footer>
       </div>
-      {fullscreen && <ImageLightbox src={gallery[frame].src} alt={gallery[frame].alt} title={`${project.title} · ${gallery[frame].label}`} returnFocus={fullscreenTriggerRef.current} onClose={() => setFullscreen(false)} />}
+      {fullscreen && <ImageLightbox src={activeFrame.src} alt={activeFrame.alt} title={`${project.title} · ${activeFrame.label}`} returnFocus={fullscreenTriggerRef.current} onClose={() => setFullscreen(false)} />}
     </dialog>,
     document.body,
   )

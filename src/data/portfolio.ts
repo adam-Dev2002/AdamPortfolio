@@ -1,5 +1,6 @@
 import { workflowProjects } from './workflows'
 import { plumbingGallery } from './plumbing'
+import { projectOverviews } from './projectOverviews'
 
 export type PortfolioProject = {
   title: string
@@ -16,7 +17,7 @@ export type PortfolioProject = {
   href: string
   linkLabel: string
   external?: boolean
-  gallery?: { src: string; alt: string; label: string; caption?: string; previewWidth?: number }[]
+  gallery?: { src: string; alt: string; label: string; caption?: string; previewWidth?: number; videoId?: string }[]
   videoId?: string
   previewWidth?: number
 }
@@ -50,13 +51,14 @@ export const portfolioProjects: PortfolioProject[] = [
     category: 'Web app · Job application tracking',
     description: 'A job-search workspace with applications, tasks, a calendar, and career news.',
     details: 'Joblink brings job discovery and daily planning into one workspace. Search listings, save opportunities, and track applications from Saved through Interview and Offer. Organize next steps on a task board, plan interviews in a Manila-time calendar, keep useful links, and manage research in an editable sheet. Career news and account settings complete the workspace. Explore every workspace page in the live 4K screenshot gallery, plus desktop and mobile sign-in views.',
-    imageSrc: '/images/joblink/joblink-dashboard.png',
-    imageAlt: 'Joblink Tracker dashboard showing application, interview, task, and event summaries',
-    imageFit: 'cover',
+    imageSrc: projectOverviews.joblink.src,
+    imageAlt: projectOverviews.joblink.alt,
+    imageFit: 'contain',
     href: 'https://joblink-tracker-c8zm.vercel.app/',
     linkLabel: 'Visit Joblink Tracker',
     external: true,
     gallery: [
+      projectOverviews.joblink,
       { src: '/images/joblink/joblink-dashboard.png', alt: 'Joblink workspace dashboard with application and planning summaries', label: 'Dashboard', caption: 'Live dashboard with clearly labeled demo applications. Summary cards show applications, interviews, open tasks, and upcoming events, with recent applications and shortcuts below. Demo outcomes are fictional.' },
       { src: '/images/joblink/joblink-jobs.png', alt: 'Joblink Explore Jobs page with search filters and job cards', label: 'Explore jobs', caption: 'Live Explore Jobs screenshot captured at 3840 x 2160. Search by keyword and feed, classify by role, and filter loaded listings by location and employment type. Listings from Remotive, Arbeitnow, and Jobicy link to their original application pages and provide a Save action.' },
       { src: '/images/joblink/joblink-news.png', alt: 'Joblink career news page with topic filters, DEV Community stories, and upcoming events', label: 'News & events', caption: 'Live news and events screenshot captured at 3840 x 2160. Career, remote-work, and productivity topics organize DEV Community stories with author attribution. Upcoming events and Philippine career-resource links support the job-search workspace.' },
@@ -73,9 +75,10 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     title: '5S Plumbing',
-    imageSrc: '/images/5s-plumbing.jpg',
-    imageAlt: 'Screenshot of the 5S Plumbing business website homepage',
-    imageFit: 'cover',
+    tools: ['WordPress', 'GoDaddy'],
+    imageSrc: projectOverviews.plumbing.src,
+    imageAlt: projectOverviews.plumbing.alt,
+    imageFit: 'contain',
     category: 'Freelance · Web development',
     description: 'A plumbing business website with service pages, reviews, and quote requests.',
     details:
@@ -83,36 +86,42 @@ export const portfolioProjects: PortfolioProject[] = [
     href: 'https://5splumbing.com/',
     linkLabel: 'Visit 5S Plumbing',
     external: true,
-    gallery: plumbingGallery,
+    gallery: [projectOverviews.plumbing, ...plumbingGallery],
     previewWidth: 1280,
   },
   {
     title: 'FU Media',
+    tools: ['Python', 'OpenCV', 'YOLO'],
     category: 'Capstone · Project leader & web developer',
     description: 'An AI-powered file management and media streaming system.',
     details:
       'Built with Python, OpenCV, and YOLO to classify 100+ image and video files. Automated tagging and keyword search helped reduce manual file-searching time.',
-    imageSrc: '/images/fu-media.jpg',
+    imageSrc: projectOverviews.fuMedia.src,
     videoId: 'Q8s3rW9jc6Q',
-    imageAlt: 'FU Media file-management demo video thumbnail',
-    imageFit: 'cover',
+    imageAlt: projectOverviews.fuMedia.alt,
+    imageFit: 'contain',
     href: 'https://www.youtube.com/watch?v=Q8s3rW9jc6Q',
     linkLabel: 'Watch project demo',
     external: true,
+    gallery: [
+      projectOverviews.fuMedia,
+      { src: '/images/fu-media.jpg', alt: 'FU Media file-management demo video thumbnail', label: 'Demo video', videoId: 'Q8s3rW9jc6Q' },
+    ],
   },
   {
     title: 'Restaurant App',
+    tools: ['Figma'],
     category: 'Figma · App design concept',
     description: 'A restaurant app interface design.',
     details:
       'A restaurant app concept with a main menu, sushi selection, and individual dish screens. Explore the original Figma layouts in the gallery.',
-    imageSrc: '/images/designs/restaurant-logo-thumbnail.png',
-    imageAlt: 'Todokeru Restaurant app logo',
+    imageSrc: projectOverviews.restaurant.src,
+    imageAlt: projectOverviews.restaurant.alt,
     imageFit: 'contain',
-    imageInset: true,
     href: '/images/designs/restaurant-cover.svg',
     linkLabel: 'View design preview',
     gallery: [
+      projectOverviews.restaurant,
       { src: '/images/designs/restaurant-menu.svg', alt: 'Restaurant app main menu', label: 'Main menu' },
       { src: '/images/designs/restaurant-sushi.svg', alt: 'Restaurant app sushi menu', label: 'Sushi menu' },
       { src: '/images/designs/restaurant-ramen.svg', alt: 'Restaurant app ramen detail screen', label: 'Dish details' },
@@ -120,17 +129,18 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     title: 'Pet Shop Business Card',
+    tools: ['Figma'],
     category: 'Figma · Graphic design',
     description: 'A two-sided business card concept for a pet shop.',
     details:
       'A print-style branding concept supplied as a Figma file, shown here with its exported design preview.',
-    imageSrc: '/images/designs/pet-shop-front.svg',
-    imageAlt: 'Front of the pet shop business card design',
+    imageSrc: projectOverviews.petShop.src,
+    imageAlt: projectOverviews.petShop.alt,
     imageFit: 'contain',
-    imageInset: true,
     href: '/images/designs/pet-shop-cover.svg',
     linkLabel: 'View design preview',
     gallery: [
+      projectOverviews.petShop,
       { src: '/images/designs/pet-shop-front.svg', alt: 'Pet shop business card front', label: 'Front side' },
       { src: '/images/designs/pet-shop-back.svg', alt: 'Pet shop business card back', label: 'Back side' },
     ],

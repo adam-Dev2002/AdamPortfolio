@@ -1,4 +1,5 @@
 import type { PortfolioProject } from './portfolio'
+import { projectOverviews } from './projectOverviews'
 
 export const workflowProjects: PortfolioProject[] = [
   {
@@ -8,12 +9,13 @@ export const workflowProjects: PortfolioProject[] = [
     description: 'Turn customer emails into reply drafts, capture inquiries in a simple CRM, and follow up with interested leads.',
     details: 'Designed for service businesses: Gemini prepares support replies in Gmail for your team to review, while a customer form saves validated inquiries to Google Sheets. Duplicate checks keep the CRM organized, and optional acknowledgments and owner alerts help your team respond. An hourly check finds open leads due for a follow-up, with customer permission and a configurable 24-hour delay. Built to reduce repetitive admin and keep inquiries moving.',
     tools: ['n8n', 'Gemini', 'Gmail', 'Google Sheets'],
-    imageSrc: '/images/workflows/customer-support-overview.png',
-    imageAlt: 'Three-part n8n workflow overview: AI support drafts, lead capture CRM, and consent-based follow-ups',
+    imageSrc: projectOverviews.customerSupport.src,
+    imageAlt: projectOverviews.customerSupport.alt,
     imageFit: 'contain',
     href: '/images/workflows/customer-support-overview.png',
     linkLabel: 'Explore workflow',
     gallery: [
+      projectOverviews.customerSupport,
       {
         src: '/images/workflows/customer-support-overview.png',
         alt: 'Client-friendly overview of customer support, lead capture, and follow-up automation',
@@ -52,16 +54,17 @@ export const workflowProjects: PortfolioProject[] = [
   },
   {
     title: 'Gemini Gmail Assistant',
+    tools: ['n8n', 'Gemini', 'Gmail'],
     category: 'n8n · AI email automation',
     description: 'A conversational email assistant with Gemini, Gmail, and session memory.',
     details: 'A chat trigger connects to a Gemini-powered agent, a Gmail sending tool, and a ten-message memory window. The assistant drafts messages in chat and sends a single email only when the current request explicitly asks it to send.',
-    imageSrc: '/images/workflows/gmail-assistant.png',
-    imageAlt: 'Five-node n8n Gemini Gmail assistant workflow',
+    imageSrc: projectOverviews.gmailAssistant.src,
+    imageAlt: projectOverviews.gmailAssistant.alt,
     imageFit: 'contain',
     href: '/images/workflows/gmail-assistant.png',
     linkLabel: 'Explore workflow',
     previewWidth: 1100,
-    gallery: [{
+    gallery: [projectOverviews.gmailAssistant, {
       src: '/images/workflows/gmail-assistant.png',
       alt: 'Chat trigger, Gemini email agent, Gemini model, Gmail tool, and simple memory connections',
       label: 'Email assistant',
@@ -70,16 +73,18 @@ export const workflowProjects: PortfolioProject[] = [
   },
   {
     title: 'PH WFH Job Finder — AI Limited Version',
+    tools: ['n8n', 'Gemini', 'Google Sheets'],
     category: 'n8n · Google Workspace automation',
     description: 'Scans remote-job sources, saves jobs to a datasheet, and prepares Gmail drafts.',
     details: 'Scans Remotive, Himalayas, and Jobicy and stores jobs in a Google Sheets datasheet. Change a selected job’s status to Ready to Draft and add the employer email to create an application draft with your resume. Review and send it from Gmail.',
-    imageSrc: '/images/workflows/job-discovery.png',
-    imageAlt: 'Updated three-source n8n job discovery and Google Sheets tracking diagram',
+    imageSrc: projectOverviews.jobFinder.src,
+    imageAlt: projectOverviews.jobFinder.alt,
     imageFit: 'contain',
     href: '/images/workflows/job-discovery.png',
     linkLabel: 'Explore workflow',
     previewWidth: 1100,
     gallery: [
+      projectOverviews.jobFinder,
       {
         src: '/images/workflows/job-finder-overview.png',
         alt: 'Complete PH WFH Job Finder workflow structure from the supplied AI Limited Version n8n export',

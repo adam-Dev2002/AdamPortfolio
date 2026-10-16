@@ -13,6 +13,7 @@ try {
     await page.goto('http://127.0.0.1:5178/projects', { waitUntil: 'networkidle' })
     await page.getByRole('button', { name: 'Preview Joblink Tracker', exact: true }).click()
     const gallery = page.locator('dialog.project-preview')
+    await gallery.getByRole('button', { name: 'Dashboard', exact: true }).click()
     const trigger = gallery.getByRole('button', {
       name: 'Open Dashboard image fullscreen',
       exact: true,

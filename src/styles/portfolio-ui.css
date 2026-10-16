@@ -35,12 +35,12 @@
   position: relative;
   display: block;
   width: 100%;
-  height: clamp(240px, 22vw, 340px);
-  aspect-ratio: auto;
+  height: auto;
+  aspect-ratio: 8 / 5;
   min-height: 0;
   max-height: none;
   flex: none;
-  background: var(--tint);
+  background: #060f16;
 }
 .portfolio-card__media--contain img { object-fit: contain; padding: 0; }
 .portfolio-card__media--inset { --media-inset: clamp(20px, 2.2vw, 36px); }
@@ -114,6 +114,10 @@
 .project-preview__stage:focus-visible { outline: 2px solid var(--orange); outline-offset: -3px; }
 .project-preview__image { max-width: none; margin-inline: auto; }
 .project-preview__image img { display: block; width: 100%; height: auto; max-width: none; border-radius: 12px; }
+.project-preview__stage--overview { display: flex; align-items: center; justify-content: center; }
+.project-preview__stage--overview .project-preview__image { height: 100%; min-height: 0; }
+.project-preview__stage--overview .project-preview__open-image { height: 100%; }
+.project-preview__stage--overview img { height: 100%; object-fit: contain; }
 .project-preview__open-image { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
 .project-preview__open-image:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; border-radius: 12px; }
 .image-lightbox { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: white; overflow: hidden; }

@@ -55,7 +55,7 @@ export default function HomeBento() {
         <CardHead Icon={FolderOpen} title="Projects" desc="Mobile apps, web, automation, and design." />
         <div className="bento__media bento__reel" aria-hidden="true">
           <div className="bento__reel-track">
-            {['/images/closeby/closeby-overview.png', '/images/workflows/gmail-assistant.png', '/images/5s-plumbing.jpg'].map((src) => (
+            {['/images/closeby/closeby-overview.png', '/images/overviews/gmail-assistant.png', '/images/overviews/plumbing.png'].map((src) => (
               <span key={src} className="bento__shot">
                 <img src={src} alt="" loading="lazy" decoding="async" />
               </span>

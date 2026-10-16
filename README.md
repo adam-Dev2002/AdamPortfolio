@@ -9,6 +9,7 @@ Adam R. Romas's personal portfolio, focused on AI engineering, n8n automation, w
 - Accessibility controls for enlarged text, high contrast, reduced motion, and underlined links.
 - Colored tool icons, including Vercel for project deployment.
 - Project galleries with back/close controls, zoom, and scroll restoration.
+- Consistent Closeby-style overview covers on every project card and opening gallery tab, composed from original screenshots, workflow diagrams, or design artwork.
 - Click any gallery image to open a fullscreen viewer with a translucent backdrop, zoom buttons, Ctrl/Cmd + scroll zoom, drag-to-pan, and Fit width. Close with Escape, the close button, or the background to return to the same gallery image.
 - HD workflow diagrams and explanations derived from n8n exports.
 - FU Media demo video, 5S Plumbing website, restaurant app designs, and pet shop business card.
@@ -43,6 +44,7 @@ Use `adam-port/portfolio-template-main` as the Root Directory if deploying the e
 
 - Profile, introduction, contact details, and social links: `src/data/profile.ts`
 - Project thumbnails and galleries: `src/data/portfolio.ts`
+- Overview captions and assets: `src/data/projectOverviews.ts` and `public/images/overviews/`. Regenerate the eight matching covers with `node scripts/capture-project-overviews.mjs`; Closeby keeps its original overview.
 - 5S Plumbing page captions and gallery: `src/data/plumbing.ts`
 - n8n workflow descriptions and captions: `src/data/workflows.ts`
 - Images, workflow previews, and resume: `public/`

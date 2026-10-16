@@ -12,13 +12,18 @@ try {
     await page.getByRole('button', { name: 'Preview 5S Plumbing', exact: true }).click()
     const dialog = page.locator('dialog.project-preview')
     const views = dialog.locator('.project-preview__tabs button')
-    assert.equal(await views.count(), 12)
+    assert.equal(await views.count(), 13)
     for (let index = 0; index < (await views.count()); index++) {
       await views.nth(index).click()
       await dialog.locator('img').evaluate((img) => img.decode())
       const size = await dialog
         .locator('img')
         .evaluate((img) => [img.naturalWidth, img.naturalHeight])
+      if (index === 0) {
+        assert.equal(await views.nth(index).innerText(), 'Overview')
+        assert.deepEqual(size, [1600, 1000])
+        continue
+      }
       assert(size[0] >= 3840, 'Full-page images must retain at least 4K width')
       assert(size[1] >= 2160, 'Full-page screenshots should include content below the first screen')
       assert((await dialog.locator('.project-preview__footer p').innerText()).length > 30)
@@ -38,7 +43,7 @@ try {
       await dialog.getByRole('link', { name: 'Visit 5S Plumbing' }).getAttribute('href'),
       'https://5splumbing.com/',
     )
-    await views.nth(0).click()
+    await dialog.getByRole('button', { name: 'Home', exact: true }).click()
     await dialog.getByRole('button', { name: 'Open fullscreen' }).click()
     const fullscreen = page.locator('dialog.image-lightbox')
     await fullscreen.getByRole('button', { name: 'Zoom in', exact: true }).click()
@@ -48,7 +53,7 @@ try {
     await page.screenshot({ path: `docs/screenshots/plumbing-${viewport.width}-gallery.png` })
     await dialog.getByRole('button', { name: 'Close preview' }).click()
     console.log(
-      `${viewport.width}px: 12 full-page 4K images, captions, scrolling, zoom, and live link passed`,
+      `${viewport.width}px: overview, 12 full-page 4K images, captions, scrolling, zoom, and live link passed`,
     )
     await page.close()
   }
