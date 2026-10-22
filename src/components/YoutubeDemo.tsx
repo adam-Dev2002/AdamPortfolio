@@ -5,9 +5,9 @@ export default function YoutubeDemo() {
         <span className="pgrid__eyebrow">Project video</span>
         <h2>FU Media — AI-powered file management</h2>
         <p>
-          A demo of my Foundation University capstone project: a media file
-          manager with AI-assisted classification, automated tags, and keyword
-          search.
+          My Foundation University capstone helps people organize and find
+          images and videos. AI identifies content and adds tags so users can
+          search by keyword and view their media in one system.
         </p>
         <a
           className="portfolio-video__link"

@@ -9,41 +9,41 @@ export const projectOverviews = {
   customerSupport: overview(
     'customer-support',
     'AI Customer Support and Lead CRM presentation with actual ClearFlow demo dashboard and lead management screenshots',
-    'Actual dashboard screenshots from an isolated ClearFlow demo workspace. Explore the frontend screens and the supplied Gemini-only workflow. Customer records, counts, and delivery states are fictional.',
+    'Real ClearFlow app screenshots and workflow diagrams. Customer records, counts, and delivery states are fictional demo data.',
   ),
   gmailAssistant: overview(
     'gmail-assistant',
     'Gemini Gmail Assistant presentation featuring the original email agent workflow diagram',
-    'A conversational email assistant with Gemini, Gmail, and session memory. This presentation uses the exported workflow diagram. Open Email assistant to inspect the connections and sending behavior.',
+    'A diagram of the email assistant workflow. Open Email assistant to see how the chat, AI model, memory, and Gmail connect.',
   ),
   jobFinder: overview(
     'job-finder',
     'PH WFH Job Finder presentation featuring job discovery and application drafting workflow diagrams',
-    'Discover remote jobs, organize them in Google Sheets, and prepare application drafts for review. This presentation uses diagrams rendered from the supplied n8n export; the detailed workflow and datasheet remain available in the tabs.',
+    'Diagrams of the job-search and application workflow. Explore each step and the tracking spreadsheet in the gallery tabs.',
   ),
   joblink: overview(
     'joblink',
     'Joblink Tracker presentation composed from actual dashboard and application tracker screenshots',
-    'A workspace for job discovery, applications, and daily planning. This presentation uses actual Joblink screenshots with fictional demo applications. Explore the original workspace and sign-in captures in the gallery.',
+    'Real Joblink screenshots with fictional demo applications. The gallery covers the workspace pages and desktop and mobile sign-in screens.',
   ),
   plumbing: overview(
     'plumbing',
     '5S Plumbing website presentation composed from actual homepage and service page screenshots',
-    'A business website that introduces plumbing services and helps visitors request a quote. This presentation uses actual website screenshots. Each original full-page capture is available in the gallery.',
+    'Real website screenshots. Choose a gallery tab to explore the full service, company, or contact page.',
   ),
   fuMedia: overview(
     'fu-media',
     'FU Media project presentation featuring a still from the file management and media streaming demo',
-    'An AI-powered file management and media streaming capstone built with Python, OpenCV, and YOLO. This presentation uses the existing demo still. Open Demo video to watch the project walkthrough.',
+    'A still from the project demonstration. Open Demo video to watch the file-management and media-streaming walkthrough.',
   ),
   restaurant: overview(
     'restaurant',
     'Restaurant app design presentation with the original main menu, sushi menu, and dish detail screens',
-    'A restaurant app design concept presented with its original Figma screens. Explore the main menu, sushi selection, and dish detail layouts individually in the gallery.',
+    'Original Figma design screens. Explore the main menu, sushi selection, and dish details in the gallery.',
   ),
   petShop: overview(
     'pet-shop',
     'Pet shop business card presentation showing the original front and back artwork',
-    'A two-sided pet shop business card concept presented with its original Figma artwork. Open Front side and Back side to inspect each design at full size.',
+    'Original Figma artwork. Open Front side or Back side to inspect each design at full size.',
   ),
 }

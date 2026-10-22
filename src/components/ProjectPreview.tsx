@@ -102,7 +102,17 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
           )}
         </div>
         <footer className="project-preview__footer">
-          <p>{activeFrame.caption ?? project.details}</p>
+          {isOverview ? (
+            <div className="project-preview__copy">
+              <h3>About this project</h3>
+              <p>{project.details}</p>
+              <details className="project-preview__technical">
+                <summary>How it works</summary>
+                <p>{project.technicalDetails}</p>
+              </details>
+              {activeFrame.caption && <p className="project-preview__caption">{activeFrame.caption}</p>}
+            </div>
+          ) : <p>{activeFrame.caption ?? project.details}</p>}
           {(project.external || project.sourceHref) && <div className="project-preview__links">
             {project.external && <a className="preview-control" href={project.href} target="_blank" rel="noopener noreferrer">{project.linkLabel}<ArrowUpRight size={16} /></a>}
             {project.sourceHref && <a className="preview-control" href={project.sourceHref} target="_blank" rel="noopener noreferrer">GitHub source<ArrowUpRight size={16} /></a>}

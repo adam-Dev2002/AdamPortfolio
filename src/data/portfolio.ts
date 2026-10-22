@@ -9,6 +9,7 @@ export type PortfolioProject = {
   category: string
   description: string
   details: string
+  technicalDetails: string
   imageSrc?: string
   imageAlt?: string
   imageFit?: 'cover' | 'contain'
@@ -29,8 +30,9 @@ export const portfolioProjects: PortfolioProject[] = [
     title: 'Closeby',
     category: 'Mobile app · GPS & location sharing',
     tools: ['React Native', 'Expo', 'TypeScript', 'Firebase'],
-    description: 'Find your phone, record trips, and choose to share your location with family or friends.',
-    details: 'Built for Android and iOS with React Native and Expo. Closeby brings GPS maps, trip history, saved places, speed alerts, and private family spaces into a dark mobile interface. Location and history sharing are opt-in, and local GPS works without an account. Shared spaces and chat use a configured Firebase backend. Explore the app screenshots, then visit GitHub for source code and setup instructions.',
+    description: 'See your location, review past trips, and choose what to share with family or friends.',
+    details: 'Closeby helps you see where your phone is, look back at trips and stops, and save places you visit. You can use local GPS without an account. Optional private groups bring location sharing and chat together, with controls for what you share.',
+    technicalDetails: 'React Native, Expo, and TypeScript power the mobile interface for Android and iOS. GPS supplies location and trip information. Firebase supports account sign-in, private groups, shared locations, and chat when configured. Location and history sharing are opt-in. The gallery includes Android and browser previews using test data.',
     imageSrc: '/images/closeby/closeby-overview.png',
     imageAlt: 'Closeby overview composed from actual mobile app screenshots',
     imageFit: 'contain',
@@ -38,7 +40,7 @@ export const portfolioProjects: PortfolioProject[] = [
     linkLabel: 'View Closeby on GitHub',
     external: true,
     gallery: [
-      { src: '/images/closeby/closeby-overview.png', alt: 'Closeby overview composed from actual mobile app screenshots', label: 'Overview', caption: 'A presentation composed from real Closeby app captures. Explore the individual screens for GPS maps, activity history, private spaces, safety controls, and settings. Locations and routes shown in this gallery are local test data.' },
+      { src: '/images/closeby/closeby-overview.png', alt: 'Closeby overview composed from actual mobile app screenshots', label: 'Overview', caption: 'Real app screenshots showing maps, trip history, private groups, and settings. Locations and routes are test data.' },
       { src: '/images/closeby/closeby-map.png', alt: 'Closeby Android emulator showing a satellite map, GPS status, and My Phone device card', label: 'Android map', previewWidth: 320, caption: 'Android emulator screenshot from the Closeby repository. The satellite map, GPS status, phone battery, accuracy, and trip controls show the app with an emulator-supplied test location, not a physical phone location.' },
       { src: '/images/closeby/closeby-history.png', alt: 'Closeby History and Activity with a local test route, daily distance, duration, stops, and timeline', label: 'Activity history', previewWidth: 320, caption: 'Browser screenshot from the Closeby repository showing History & Activity with local test data. Member selection, daily distance and duration, a route map, and a movement/stop timeline demonstrate the interface. Names and routes shown are test fixtures.' },
       { src: '/images/closeby/closeby-spaces.png', alt: 'Closeby private Spaces screen captured in local browser mode', label: 'Spaces', previewWidth: 320, caption: 'Fresh local browser capture of Spaces. A configured Firebase account is required to create or join a private space, share locations with members, and use group chat. This local preview does not connect to a live family space.' },
@@ -50,8 +52,9 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     title: 'Joblink Tracker',
     category: 'Web app · Job application tracking',
-    description: 'A job-search workspace with applications, tasks, a calendar, and career news.',
-    details: 'Joblink brings job discovery and daily planning into one workspace. Search listings, save opportunities, and track applications from Saved through Interview and Offer. Organize next steps on a task board, plan interviews in a Manila-time calendar, keep useful links, and manage research in an editable sheet. Career news and account settings complete the workspace. Explore every workspace page in the live 4K screenshot gallery, plus desktop and mobile sign-in views.',
+    description: 'Find job opportunities, track applications, and plan interviews and next steps in one place.',
+    details: 'Joblink helps job seekers keep their search organized. Save interesting roles, track each application from the first step to an interview or offer, and plan tasks and interview dates. A calendar, saved links, research sheet, and career news keep useful information close at hand.',
+    technicalDetails: 'The web app brings together listings from Remotive, Arbeitnow, and Jobicy with keyword, role, location, and employment filters. It includes an application tracker, a task board with draggable cards, a calendar using Manila time, and an editable research sheet. Applications and sheet data can be exported as CSV files for use in a spreadsheet.',
     imageSrc: projectOverviews.joblink.src,
     imageAlt: projectOverviews.joblink.alt,
     imageFit: 'contain',
@@ -81,9 +84,10 @@ export const portfolioProjects: PortfolioProject[] = [
     imageAlt: projectOverviews.plumbing.alt,
     imageFit: 'contain',
     category: 'Freelance · Web development',
-    description: 'A plumbing business website with service pages, reviews, and quote requests.',
+    description: 'Help customers understand a plumbing business, explore its services, and request a quote.',
     details:
-      'Built with WordPress and GoDaddy to introduce the business, explain its services, share customer reviews, and help visitors request a quote. Explore the full-page screenshots in the gallery.',
+      'A freelance website for 5S Plumbing that helps visitors find the right service and contact the business. Service pages explain the work offered, while customer reviews, common questions, and quote-request forms help people decide what to do next.',
+    technicalDetails: 'Built with WordPress and GoDaddy. The site organizes service information, company details, reviews, FAQs, and contact forms across dedicated pages. The gallery shows full-page captures of 12 public pages, including plumbing, drain cleaning, gas lines, heating and cooling, and remodeling.',
     href: 'https://5splumbing.com/',
     linkLabel: 'Visit 5S Plumbing',
     external: true,
@@ -94,9 +98,10 @@ export const portfolioProjects: PortfolioProject[] = [
     title: 'FU Media',
     tools: ['Python', 'OpenCV', 'YOLO'],
     category: 'Capstone · Project leader & web developer',
-    description: 'An AI-powered file management and media streaming system.',
+    description: 'Find images and videos with automatic tags and keyword search, and stream media in one system.',
     details:
-      'Built with Python, OpenCV, and YOLO to classify 100+ image and video files. Automated tagging and keyword search helped reduce manual file-searching time.',
+      'FU Media is my Foundation University capstone, where I served as project leader and web developer. It helps people organize and find images and videos by using AI to identify content and add tags. Keyword search and media streaming let users find and view files in the same system.',
+    technicalDetails: 'Built with Python, OpenCV, and YOLO. OpenCV processes image and video content, while YOLO detects objects to support classification and automatic tagging. Those tags make media searchable by keyword. The demo shows the file-management and media-streaming features.',
     imageSrc: projectOverviews.fuMedia.src,
     videoId: 'Q8s3rW9jc6Q',
     imageAlt: projectOverviews.fuMedia.alt,
@@ -113,9 +118,10 @@ export const portfolioProjects: PortfolioProject[] = [
     title: 'Restaurant App',
     tools: ['Figma'],
     category: 'Figma · App design concept',
-    description: 'A restaurant app interface design.',
+    description: 'A mobile app design that helps diners browse a restaurant menu and explore individual dishes.',
     details:
-      'A restaurant app concept with a main menu, sushi selection, and individual dish screens. Explore the original Figma layouts in the gallery.',
+      'A restaurant app concept focused on browsing food, from the main menu to a sushi selection and individual dish details. The screens use food imagery and clear sections to help diners explore their choices.',
+    technicalDetails: 'Designed in Figma as a mobile interface concept. The gallery presents the original main-menu, sushi-menu, and dish-detail layouts as SVG exports, which stay sharp when enlarged. These screens demonstrate the visual design rather than a working ordering service.',
     imageSrc: projectOverviews.restaurant.src,
     imageAlt: projectOverviews.restaurant.alt,
     imageFit: 'contain',
@@ -132,9 +138,10 @@ export const portfolioProjects: PortfolioProject[] = [
     title: 'Pet Shop Business Card',
     tools: ['Figma'],
     category: 'Figma · Graphic design',
-    description: 'A two-sided business card concept for a pet shop.',
+    description: 'A friendly, two-sided business card design that gives a pet shop a recognizable visual identity.',
     details:
-      'A print-style branding concept supplied as a Figma file, shown here with its exported design preview.',
+      'A business card concept that introduces a pet shop through a friendly visual style. The front and back work together as a compact brand presentation, showing how the same identity can carry across both sides of a card.',
+    technicalDetails: 'Designed in Figma with coordinated color, typography, imagery, and spacing across two layouts. The gallery includes separate SVG exports of the front and back so each side can be inspected at full size. This is a design concept.',
     imageSrc: projectOverviews.petShop.src,
     imageAlt: projectOverviews.petShop.alt,
     imageFit: 'contain',
