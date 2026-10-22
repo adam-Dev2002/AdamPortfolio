@@ -27,7 +27,7 @@ export default function AboutBento() {
           <p className="about-intro__body">{profile.hero.body}</p>
           <div className="about-card__actions">
             <a className="about-action" href={profile.resumeSrc} download="Adam-Romas-Resume-2026.pdf">Download my resume <ArrowUpRight size={16} aria-hidden="true" /></a>
-            <Link className="about-text-link" to="/projects">Explore my work <ArrowUpRight size={15} aria-hidden="true" /></Link>
+            <Link className="about-text-link" to="/showcase">Explore my work <ArrowUpRight size={15} aria-hidden="true" /></Link>
           </div>
         </article>
 

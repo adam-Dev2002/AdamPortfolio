@@ -1,8 +1,21 @@
 import assert from 'node:assert/strict'
 import { chromium } from 'playwright'
+import { readFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+
+const baseURL = process.env.PORTFOLIO_BASE_URL || 'http://127.0.0.1:5173'
+const provenance = JSON.parse(await readFile(new URL('../public/images/customer-support/provenance.json', import.meta.url), 'utf8'))
+const workflow = JSON.parse(await readFile(new URL('../public/images/workflows/customer-support-provenance.json', import.meta.url), 'utf8'))
+assert.equal(workflow.sourceSha256, provenance.workflowSha256, 'Screenshots and diagrams must reference the same reviewed ClearFlow export')
+assert.equal(workflow.automationNodes, 118)
+assert.equal(workflow.totalNodes, 128)
+for (const screenshot of provenance.screenshots) {
+  const image = await readFile(new URL(`../public/images/customer-support/${screenshot.name}.png`, import.meta.url))
+  assert.equal(createHash('sha256').update(image).digest('hex'), screenshot.sha256, 'Application screenshots must match the pinned fictional captures')
+}
 
 const projects = [
-  { title: 'AI Customer Support & Lead CRM', cover: 'customer-support', tabs: ['Overview', 'At a glance', 'Support drafts', 'Lead capture', 'Follow-ups', 'Full workflow'] },
+  { title: 'AI Customer Support & Lead CRM', cover: 'customer-support', tabs: ['Overview', 'Dashboard', 'Leads', 'Inbox', 'Reply review', 'Follow-ups', 'Settings', 'At a glance', 'Support drafts', 'Lead capture', 'Follow-up route', 'Dashboard sync', 'Confirmed sending', 'Full workflow'] },
   { title: 'Gemini Gmail Assistant', cover: 'gmail-assistant', tabs: ['Overview', 'Email assistant'] },
   { title: 'PH WFH Job Finder', cover: 'job-finder', tabs: ['Overview', 'Full workflow', 'Search schedule', 'Discover jobs', 'Write applications', 'Attach & save', 'Tracker datasheet'] },
   { title: 'Closeby', src: '/images/closeby/closeby-overview.png', tabs: ['Overview', 'Android map', 'Activity history', 'Spaces', 'Safety', 'Settings', 'Sign in'] },
@@ -19,7 +32,7 @@ try {
     const page = await browser.newPage({ viewport, reducedMotion: 'reduce' })
     page.on('pageerror', error => errors.push(`${viewport.width}px: ${error.message}`))
     for (const route of ['/projects', '/showcase']) {
-      await page.goto(`http://127.0.0.1:5178${route}`, { waitUntil: 'networkidle' })
+      await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' })
       await page.locator('h1').waitFor()
       assert.equal(await page.locator('.portfolio-card').count(), projects.length)
       await page.locator('.portfolio-card img').evaluateAll(async images => {
@@ -62,9 +75,25 @@ try {
           return box.left >= 0 && box.right <= innerWidth && box.top >= 0 && box.bottom <= innerHeight
         }), 'The preview dialog must fit the viewport')
         if (project.cover === 'customer-support') {
-          await dialog.getByRole('button', { name: 'At a glance', exact: true }).click()
-          await image.evaluate(img => img.decode())
-          assert.equal(await image.getAttribute('src'), '/images/workflows/customer-support-overview.png', 'The original CRM diagram must remain available')
+          assert.equal(await dialog.getByRole('link', { name: 'Visit live dashboard' }).getAttribute('href'), 'https://ai-customer-lead-crm-system-1hmk.vercel.app/leads')
+          assert.equal(await dialog.getByRole('link', { name: 'GitHub source' }).getAttribute('href'), 'https://github.com/adam-Dev2002/AI-Customer-Lead-CRM-System')
+          for (const tab of project.tabs.slice(1)) {
+            await dialog.getByRole('button', { name: tab, exact: true }).click()
+            await image.evaluate(img => img.decode())
+            if (['Dashboard', 'Leads', 'Inbox', 'Reply review', 'Follow-ups', 'Settings'].includes(tab)) {
+              assert.deepEqual(await image.evaluate(img => [img.naturalWidth, img.naturalHeight]), [1440, 1000])
+              assert(await dialog.locator('.project-preview__stage').evaluate(stage => stage.scrollWidth <= stage.clientWidth + 1), 'Dashboard screenshots must fit the preview width')
+            }
+          }
+          await dialog.getByRole('button', { name: 'Leads', exact: true }).click()
+          await image.click()
+          const lightbox = page.locator('.image-lightbox')
+          await lightbox.waitFor({ state: 'visible' })
+          await lightbox.locator('img').evaluate(img => img.decode())
+          assert.equal(await lightbox.locator('img').getAttribute('src'), '/images/customer-support/leads.png')
+          await page.keyboard.press('Escape')
+          await lightbox.waitFor({ state: 'hidden' })
+          assert.equal(await dialog.getByRole('button', { name: 'Leads', exact: true }).getAttribute('aria-pressed'), 'true')
         }
         if (project.cover === 'fu-media') {
           assert.equal(await dialog.locator('iframe').count(), 0, 'Opening the overview must not load the video')

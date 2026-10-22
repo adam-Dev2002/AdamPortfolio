@@ -103,7 +103,10 @@ export default function ProjectPreview({ project, onClose }: { project: Portfoli
         </div>
         <footer className="project-preview__footer">
           <p>{activeFrame.caption ?? project.details}</p>
-          {project.external && <a className="preview-control" href={project.href} target="_blank" rel="noopener noreferrer">{project.linkLabel}<ArrowUpRight size={16} /></a>}
+          {(project.external || project.sourceHref) && <div className="project-preview__links">
+            {project.external && <a className="preview-control" href={project.href} target="_blank" rel="noopener noreferrer">{project.linkLabel}<ArrowUpRight size={16} /></a>}
+            {project.sourceHref && <a className="preview-control" href={project.sourceHref} target="_blank" rel="noopener noreferrer">GitHub source<ArrowUpRight size={16} /></a>}
+          </div>}
         </footer>
       </div>
       {fullscreen && <ImageLightbox src={activeFrame.src} alt={activeFrame.alt} title={`${project.title} · ${activeFrame.label}`} returnFocus={fullscreenTriggerRef.current} onClose={() => setFullscreen(false)} />}

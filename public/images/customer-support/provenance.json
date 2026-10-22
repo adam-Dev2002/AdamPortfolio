@@ -1,0 +1,58 @@
+{
+  "repository": "https://github.com/adam-Dev2002/AI-Customer-Lead-CRM-System",
+  "revision": "72638e8e2c955014d989d99fe44a45e47bcf3bca",
+  "captureScript": "https://raw.githubusercontent.com/adam-Dev2002/AI-Customer-Lead-CRM-System/72638e8e2c955014d989d99fe44a45e47bcf3bca/scripts/capture-setup-docs.mjs",
+  "sourceNotes": "https://raw.githubusercontent.com/adam-Dev2002/AI-Customer-Lead-CRM-System/72638e8e2c955014d989d99fe44a45e47bcf3bca/docs/images/setup/README.md",
+  "workflowSha256": "13c6167752c025c00971a1c34c24976ddebd2ece0baede8a153bb5c1de2d2773",
+  "data": "ClearFlow Demo Plumbing; 16 fictional sample leads; example.com addresses; mock QA Owner; no live integrations.",
+  "screenshots": [
+    {
+      "name": "dashboard",
+      "route": "/",
+      "source": "https://raw.githubusercontent.com/adam-Dev2002/AI-Customer-Lead-CRM-System/72638e8e2c955014d989d99fe44a45e47bcf3bca/docs/images/setup/dashboard.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "63a60e427e19f081dd4dc62619d01139b68b91c1cd57c823eb20853c9c663fd0"
+    },
+    {
+      "name": "leads",
+      "route": "/leads",
+      "source": "https://raw.githubusercontent.com/adam-Dev2002/AI-Customer-Lead-CRM-System/72638e8e2c955014d989d99fe44a45e47bcf3bca/docs/images/setup/leads.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "3e1fb27ab07079f0c2578d49f88ae2bec318b83c70bd7e52de69a790cc5da179"
+    },
+    {
+      "name": "inbox",
+      "route": "/inbox",
+      "source": "https://raw.githubusercontent.com/adam-Dev2002/AI-Customer-Lead-CRM-System/72638e8e2c955014d989d99fe44a45e47bcf3bca/docs/images/setup/inbox.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "4f060d291c4e15d72dbebe042b6d2b482db7f557d0d98d9bbfc185bdfa930d76"
+    },
+    {
+      "name": "reply-review",
+      "route": "/inbox?view=replies",
+      "source": "https://raw.githubusercontent.com/adam-Dev2002/AI-Customer-Lead-CRM-System/72638e8e2c955014d989d99fe44a45e47bcf3bca/docs/images/setup/reply-review.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "f2c227d30ba30e9c61535da5b70cf3090b4c4b361d5fbfb4de43686f46bf9a28"
+    },
+    {
+      "name": "follow-ups",
+      "route": "/follow-ups",
+      "source": "https://raw.githubusercontent.com/adam-Dev2002/AI-Customer-Lead-CRM-System/72638e8e2c955014d989d99fe44a45e47bcf3bca/docs/images/setup/follow-ups.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "96cc990ab05e0a1c814f23c004e535305f9868192daae6fa1e08b94fec385c35"
+    },
+    {
+      "name": "settings",
+      "route": "/settings",
+      "source": "https://raw.githubusercontent.com/adam-Dev2002/AI-Customer-Lead-CRM-System/72638e8e2c955014d989d99fe44a45e47bcf3bca/docs/images/setup/settings.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "526aaa049762c9d08cf13553c7d3b947be5e1a2f1a2fc5406a19a30b16b8e668"
+    }
+  ]
+}

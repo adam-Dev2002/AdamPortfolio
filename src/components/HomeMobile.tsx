@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { CaretRight, Play, Stack, Coffee } from '@/components/slab'
+import { CaretRight, Play, Stack } from '@/components/slab'
 import { profile } from '@/data/profile'
 import QuickMenu from './QuickMenu'
 
@@ -46,11 +46,10 @@ export function HomeStats() {
 }
 
 const TILES = [
-  { n: '01', label: 'Projects', to: '/projects', title: 'Selected work', desc: 'Mobile, web, AI, and design projects.', img: '/images/closeby/closeby-overview.png' },
+  { n: '01', label: 'Showcase', to: '/showcase', title: 'Selected work', desc: 'Mobile, web, AI, and design projects.', img: '/images/closeby/closeby-overview.png' },
   { n: '02', label: 'Skills', to: '/services', title: 'Web & IT', desc: 'Development, computer vision, and support.', Icon: Stack },
-  { n: '03', label: 'Portfolio', to: '/showcase', title: 'Watch FU Media', desc: 'AI-powered media file management demo.', Icon: Coffee, accent: true },
-  { n: '04', label: 'Experience', to: '/testimonials', title: 'TTEC & Inspiro', desc: 'Customer service and IT support.', img: profile.avatarSrc },
-  { n: '05', label: 'About', to: '/about', title: `Hi, I'm ${profile.firstName}.`, desc: 'BSIT graduate from Foundation University.', img: profile.avatarSrc },
+  { n: '03', label: 'Experience', to: '/testimonials', title: 'TTEC & Inspiro', desc: 'Customer service and IT support.', img: profile.avatarSrc },
+  { n: '04', label: 'About', to: '/about', title: `Hi, I'm ${profile.firstName}.`, desc: 'BSIT graduate from Foundation University.', img: profile.avatarSrc },
 ] as const
 
 export function HomeExplore() {
@@ -62,7 +61,7 @@ export function HomeExplore() {
       <ul className="htiles" role="list">
         {TILES.map((t) => (
           <li key={t.to}>
-            <Link to={t.to} className={`htile${'accent' in t && t.accent ? ' htile--accent' : ''}`}>
+            <Link to={t.to} className="htile">
               {'img' in t ? (
                 <span className="htile__media"><img className="htile__img" src={t.img} alt="" loading="lazy" /></span>
               ) : (

@@ -41,13 +41,13 @@ async function phone(path, left, top, w, angle, layer) {
 
 const projects = [
   {
-    id: 'customer-support', kicker: 'WORKFLOW / CUSTOMER SUPPORT', title: 'AI Support<br>& Lead CRM', titleSize: 70,
-    headline: 'Reply faster.<br>Keep leads moving.', description: 'Email drafts, organized leads<br>and consent-based follow-ups.',
-    tags: ['n8n', 'Gemini', 'Gmail · Sheets'], accent: '#bba2ff', glow: '#282448',
-    provenance: 'EXPORTED WORKFLOW DIAGRAMS',
+    id: 'customer-support', kicker: 'WEB APP / AI CUSTOMER SUPPORT', title: 'AI Support<br>& Lead CRM', titleSize: 70,
+    headline: 'Review replies.<br>Keep leads moving.', description: 'An owner dashboard for inquiries,<br>AI replies and follow-ups.',
+    tags: ['Next.js', 'n8n', 'Gemini'], accent: '#bba2ff', glow: '#282448',
+    provenance: 'ACTUAL APP CAPTURES · FICTIONAL DEMO DATA',
     render: async () => [
-      await board({ path: 'workflows/customer-support-overview.png', label: 'Support replies · Lead capture · Follow-ups', left: 620, top: 192, w: 890, crop: [25, 211, 1540, 683, 1600, 980] }),
-      await board({ path: 'workflows/customer-support-drafts.png', label: 'Support drafts / workflow detail', left: 888, top: 610, w: 610, crop: [25, 190, 1750, 805, 1800, 1110], angle: 5, layer: 2 }),
+      await board({ path: 'customer-support/dashboard.png', label: 'ClearFlow / Dashboard · Sample workspace', left: 620, top: 162, w: 890, crop: [0, 0, 1440, 1000, 1440, 1000], browser: true }),
+      await board({ path: 'customer-support/leads.png', label: 'ClearFlow / Leads · Fictional customers', left: 925, top: 535, w: 550, crop: [0, 0, 1440, 1000, 1440, 1000], angle: 5, layer: 2, browser: true }),
     ].join(''),
   },
   {
@@ -130,6 +130,8 @@ const css = `
 `
 
 await mkdir(output, { recursive: true })
+const selectedProject = process.argv[2]
+if (selectedProject && !projects.some(project => project.id === selectedProject)) throw new Error(`Unknown project: ${selectedProject}`)
 const browser = await chromium.launch({ channel: process.env.PLAYWRIGHT_CHANNEL || 'chrome', headless: true })
 let currentProject
 try {
@@ -140,6 +142,7 @@ try {
     currentProject = project.id
     usedAssets.set(currentProject, new Set())
     const artwork = await project.render()
+    if (selectedProject && selectedProject !== project.id) continue
     await page.setContent(`<!doctype html><html><head><meta charset="utf-8"><style>${css}</style></head><body style="--accent:${project.accent};--glow:${project.glow};--title-size:${project.titleSize}px"><div class="copy"><div class="kicker">${escape(project.kicker)}</div><h1>${project.title}</h1><h2>${project.headline}</h2><p>${project.description}</p><div class="tags">${project.tags.map(tag => `<span>${escape(tag)}</span>`).join('')}</div></div>${artwork}<div class="label"><span class="dot"></span>${escape(project.provenance)} · PRESENTATION COMPOSITION</div></body></html>`)
     await page.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode())))
     const issues = await page.locator('.copy').evaluate(copy => {

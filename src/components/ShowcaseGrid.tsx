@@ -31,7 +31,7 @@ export default function ShowcaseGrid() {
             Upwork profile <ArrowUpRight size={15} weight="bold" aria-hidden="true" />
           </a>
         </div>
-        <PortfolioCards showDetails />
+        <PortfolioCards />
       </div>
     </section>
   )

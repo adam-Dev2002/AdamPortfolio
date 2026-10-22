@@ -1,6 +1,6 @@
 import { StrictMode, lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import App from './App'
 import Home from '@/components/Home'
 import NotFound from '@/components/NotFound'
@@ -8,7 +8,6 @@ import { restorePerfTier } from '@/lib/perf'
 import { restorePrefs } from '@/lib/a11y'
 
 // Every route but Home is its own chunk: the first visit only pays for Home.
-const ProjectsView = lazy(() => import('@/views/ProjectsView'))
 const ServicesView = lazy(() => import('@/views/ServicesView'))
 const ShowcaseView = lazy(() => import('@/views/ShowcaseView'))
 const TestimonialsGrid = lazy(() => import('@/components/TestimonialsGrid'))
@@ -66,7 +65,7 @@ createRoot(container).render(
             renders into its one scrolling panel. */}
         <Route element={<App />}>
           <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<ProjectsView />} />
+          <Route path="/projects" element={<Navigate to="/showcase" replace />} />
           <Route path="/services" element={<ServicesView />} />
           <Route path="/showcase" element={<ShowcaseView />} />
           <Route path="/testimonials" element={<TestimonialsGrid />} />

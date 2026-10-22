@@ -17,6 +17,7 @@ export type PortfolioProject = {
   href: string
   linkLabel: string
   external?: boolean
+  sourceHref?: string
   gallery?: { src: string; alt: string; label: string; caption?: string; previewWidth?: number; videoId?: string }[]
   videoId?: string
   previewWidth?: number

@@ -1,11 +1,13 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { chromium } from 'playwright'
+import { createHash } from 'node:crypto'
 
 // Only labels, node types, positions, and connections enter these public diagrams.
 // Parameters, prompts, account details, and credential references stay in the source export.
 if (!process.argv[2]) throw new Error('Usage: node scripts/capture-customer-support.mjs <workflow.json>')
-const source = JSON.parse(await readFile(resolve(process.argv[2]), 'utf8'))
+const sourceBytes = await readFile(resolve(process.argv[2]))
+const source = JSON.parse(sourceBytes.toString('utf8'))
 const nodes = source.nodes.filter(node => !node.type.endsWith('.stickyNote'))
 const byName = new Map(nodes.map(node => [node.name, node]))
 const out = resolve('public/images/workflows')
@@ -25,6 +27,7 @@ function shell(width, height, title, subtitle, body, footer) {
 }
 function icon(type, name) {
   if (type.endsWith('.httpRequest') && /Gemini/.test(name)) return ['AI', '✦', '#b399ff']
+  if (type.endsWith('.httpRequest') && /^(?:Read (?:sending )?Gmail|Check Gmail|Update Gmail|Save confirmed Gmail|Send confirmed Gmail)/.test(name)) return ['Gmail API', 'M', '#ff998c']
   if (type.endsWith('.gmail')) return ['Gmail', 'M', '#ff998c']
   if (type.endsWith('.googleSheets')) return ['Sheets', 'S', '#71d3ad']
   if (type.endsWith('.if')) return ['Condition', '?', '#ffc183']
@@ -62,9 +65,10 @@ function graph({ title, subtitle, layout, width = 1800, height = 1110, compact =
 }
 function overview() {
   const lanes = [
-    { y: 255, index: '01', color: '#b399ff', title: 'Support replies', benefit: 'Spend less time writing.', steps: [['Gmail inbox', 'Read customer emails', 'M'], ['Gemini AI', 'Prepare a reply', '✦'], ['Review rules', 'Flag sensitive requests', '?'], ['Gmail drafts', 'Your team reviews & sends', 'M']] },
-    { y: 480, index: '02', color: '#71d3ad', title: 'Lead capture', benefit: 'Keep inquiries organized.', steps: [['Customer form', 'Collect inquiry & consent', '≡'], ['Check & classify', 'Validate, dedupe, optional AI', '{}'], ['Sheets CRM', 'Save the customer lead', 'S'], ['Team notifications', 'Optional emails & owner alerts', 'M']] },
-    { y: 705, index: '03', color: '#ffc183', title: 'Follow-ups', benefit: 'Keep next steps moving.', steps: [['Hourly check', 'Find open leads', '◷'], ['Consent & timing', 'Check permission & due date', '?'], ['Follow-up email', 'Send when enabled', 'M'], ['Sheets update', 'Record the outcome', 'S']] },
+    { y: 230, index: '01', color: '#b399ff', title: 'Support replies', benefit: 'Prepare a helpful response.', steps: [['Gmail inbox', 'Screen incoming inquiries', 'M'], ['Gemini AI', 'Prepare a suggested reply', '✦'], ['Gmail drafts', 'Keep the reply for review', 'M'], ['Dashboard event', 'Publish inquiry & draft', '↗']] },
+    { y: 455, index: '02', color: '#71d3ad', title: 'Lead capture', benefit: 'Keep inquiries organized.', steps: [['Customer form', 'Collect inquiry & consent', '≡'], ['Check & classify', 'Validate, dedupe, optional AI', '{}'], ['Sheets + dashboard', 'Save and publish the lead', 'S'], ['Notifications', 'Respect email preferences', 'M']] },
+    { y: 680, index: '03', color: '#93baff', title: 'Owner dashboard', benefit: 'Review and choose next steps.', steps: [['Next.js frontend', 'Manage leads & reply reviews', '↗'], ['One-minute bridge', 'Sync owner changes to Sheets', 'S'], ['Owner confirms', 'Queue a separate send action', '?'], ['Gmail result', 'Confirm the delivery outcome', 'M']] },
+    { y: 905, index: '04', color: '#ffc183', title: 'Follow-ups', benefit: 'Follow up with permission.', steps: [['Hourly check', 'Find due, consenting leads', '◷'], ['Reviewed email', 'Claim approved follow-up', '?'], ['Gmail delivery', 'Send the reserved follow-up', 'M'], ['Result events', 'Update Sheets & dashboard', '↗']] },
   ]
   let body = `<rect x="55" y="184" width="1490" height="1" fill="#35445c"/>`
   for (const lane of lanes) {
@@ -75,34 +79,48 @@ function overview() {
       body += `<g transform="translate(${x} ${y})"><rect width="246" height="156" rx="18" fill="#1d2a3d" stroke="#43516b"/><rect x="16" y="16" width="34" height="34" rx="10" fill="${lane.color}"/>${text(22, 40, mark, 22, '#152136', 700)}${text(16, 83, title, 19, '#f4f7fc', 700, 24)}${text(16, 111, description, 15, '#a8b8cf', 400, 28, 20)}</g>`
     })
   }
-  return shell(1600, 980, 'AI Customer Support & Lead CRM', 'Gmail + Gemini + Google Sheets. Three business tasks in one n8n workflow.', body, 'Workflow overview rendered from the supplied export · Support replies stay in drafts · Follow-ups require permission')
+  return shell(1600, 1200, 'AI Customer Support & Lead CRM', 'Next.js owner dashboard + n8n + Gemini + Gmail + Google Sheets. One connected customer support project.', body, 'Supplied ClearFlow export · 118 automation nodes + 10 notes · Approval and sending are separate · Diagram, not a live execution')
 }
 const positions = rows => Object.fromEntries(rows.flatMap((row, r) => row.map((name, c) => [name, [55 + c * 294, 220 + r * 204]])))
 const stages = [
-  ['customer-support-overview', overview(), 1600, 980],
-  ['customer-support-drafts', graph({ title: '01 / Prepare support replies for review', subtitle: 'The connected Gemini route: email checks, trusted business context, AI review, and Gmail drafts.', layout: positions([
-    ['START — Manual Test', 'CONFIG — BUSINESS, FAQ & AI MODELS', 'Gmail — List Labels', 'Verify Gmail Labels', 'Gmail — Find Unhandled Customer Emails', 'LOOP — One Email At A Time'],
-    ['START — Every 5 Minutes', 'Gmail — Read Full Email', 'Prepare Email + Safety Screen', 'IF — Eligible Customer Email?', 'Gmail — Lock For Processing', 'Compose Trusted AI Prompt'],
-    ['Gmail — Mark Skipped', 'IF — Primary Gemini?', 'AI — Gemini Primary', 'Parse Gemini Result', 'IF — Gemini Valid?', 'Review AI & Route'],
-    ['END — Batch Complete', 'Gmail — Remove Processing Lock', 'Gmail — Label No-Draft Outcome', 'Gmail — Label Draft Outcome', 'Gmail — Create Draft (NEVER SEND)', 'IF — Create Customer Draft?'],
+  ['customer-support-overview', overview(), 1600, 1200],
+  ['customer-support-drafts', graph({ title: '01 / Prepare support replies for review', subtitle: 'Shared business settings, Gemini suggestions, a manual-review fallback, and dashboard result events.', height: 1320, layout: positions([
+    ['START — Every 5 Minutes', 'Read shared email configuration', 'CONFIG — BUSINESS, FAQ & AI MODELS', 'Gmail — List Labels', 'Verify Gmail Labels', 'Gmail — Find Unhandled Customer Emails'],
+    ['LOOP — One Email At A Time', 'Gmail — Read Full Email', 'Prepare Email + Safety Screen', 'IF — Eligible Customer Email?', 'Gmail — Lock For Processing', 'CHECK — Email AI Enabled?'],
+    ['Compose Trusted AI Prompt', 'AI — Gemini Primary', 'Parse Gemini Result', 'Review AI & Route', 'IF — Create Customer Draft?', 'Gmail — Create Draft (NEVER SEND)'],
+    ['Prepare manual email review', 'Gmail — Mark Skipped', 'Gmail — Label No-Draft Outcome', 'Gmail — Label Draft Outcome', 'Gmail — Remove Processing Lock', 'END — Batch Complete'],
+    ['Email support processed', 'Publish Email support processed', 'Email screening result', 'Publish Email screening result', 'Email inquiry without draft', 'Publish Email inquiry without draft'],
+  ]) }), 1800, 1320],
+  ['customer-support-leads', graph({ title: '02 / Capture leads in Sheets and the dashboard', subtitle: 'Validate, deduplicate, optionally classify with Gemini, and respect independent notification preferences.', height: 1320, layout: positions([
+    ['FORM — Customer Inquiry', 'TAG — Form Submission', 'Keep inquiry context', 'Read shared CRM configuration', 'CONFIG — BUSINESS SETTINGS (EDIT HERE)', 'ROUTE — Is Customer Form?'],
+    ['VALIDATE — Format & Check Lead', 'CHECK — Is Lead Valid?', 'SHEETS — Read for Duplicate Check', 'DEDUPE — Same Inquiry Within 15 Min', 'CHECK — Not Duplicate?', 'LEADS — AI Classification Enabled?'],
+    ['LEADS — Prepare Gemini Lead Prompt', 'LEADS — Gemini Classify (Optional)', 'LEADS — Parse AI or Safe Default', 'SHEETS — Append Customer Lead', 'Form Captured', 'Publish Form captured'],
+    ['LEADS — Without AI (Free Mode)', 'CHECK — Customer Emails Enabled?', 'CHECK — Customer Acknowledgement Enabled?', 'GMAIL — Acknowledge Inquiry', 'Record acknowledgement result', 'CHECK — Owner Alerts Enabled?'],
+    ['GMAIL — Alert Business Owner', 'Record owner alert result', 'SHEETS — Save Initial Email Results', 'Initial email results', 'Publish Initial email results'],
+  ]) }), 1800, 1320],
+  ['customer-support-followups', graph({ title: '03 / Deliver a reviewed, consented follow-up', subtitle: 'The hourly route checks eligibility and claims approved content before reservation and delivery.', height: 900, layout: positions([
+    ['SCHEDULE — Check Open Leads Hourly', 'TAG — Scheduled Review', 'Keep inquiry context', 'Read shared CRM configuration', 'CONFIG — BUSINESS SETTINGS (EDIT HERE)', 'ROUTE — Is Customer Form?'],
+    ['SHEETS — Read Open Leads', 'FILTER — Pending Consented Follow-Ups', 'Claim consented follow-up', 'Follow-up claimed?', 'SHEETS — Reserve Follow-Up', 'Follow-up reserved'],
+    ['Publish Follow-up reserved', 'GMAIL — Send Consented Follow-Up', 'SHEETS — Log Follow-Up Outcome', 'Follow-up outcome', 'Publish Follow-up outcome'],
+  ]) }), 1800, 900],
+  ['customer-support-sync', graph({ title: '04 / Synchronize owner changes', subtitle: 'A one-minute bridge applies lead edits and reply reviews. Updating an existing draft never sends it.', layout: positions([
+    ['Poll every minute', 'Bridge settings', 'Read owner changes', 'Each change', 'Loop changes', 'Lead change?'],
+    ['Read existing lead', 'Merge owner fields', 'Lead row valid?', 'Save shared lead', 'Lead acknowledgement', 'Confirm external result'],
+    ['Prepare review row', 'Save reply review', 'Update existing Gmail draft?', 'Read Gmail draft', 'Prepare Gmail update', 'Gmail update valid?'],
+    ['Update Gmail draft — never send', 'Gmail acknowledgement', 'Review acknowledgement', 'Guard acknowledgement'],
   ]) }), 1800, 1110],
-  ['customer-support-leads', graph({ title: '02 / Turn an inquiry into an organized lead', subtitle: 'Validate the form, check duplicates, optionally classify with AI, and save to a Google Sheets CRM.', layout: positions([
-    ['FORM — Customer Inquiry', 'TAG — Form Submission', 'CONFIG — BUSINESS SETTINGS (EDIT HERE)', 'ROUTE — Is Customer Form?', 'VALIDATE — Format & Check Lead', 'CHECK — Is Lead Valid?'],
-    ['SHEETS — Read for Duplicate Check', 'DEDUPE — Same Inquiry Within 15 Min', 'CHECK — Not Duplicate?', 'LEADS — AI Classification Enabled?', 'LEADS — Prepare Gemini Lead Prompt', 'LEADS — Gemini Classify (Optional)'],
-    ['SHEETS — Save Initial Email Results', 'GMAIL — Alert Business Owner', 'GMAIL — Acknowledge Inquiry', 'CHECK — Customer Emails Enabled?', 'SHEETS — Append Customer Lead', 'LEADS — Parse AI or Safe Default'],
-    ['LEADS — Without AI (Free Mode)'],
-  ]) }), 1800, 1110],
-  ['customer-support-followups', graph({ title: '03 / Follow up with permission', subtitle: 'Check hourly. Follow up only on open, consenting leads whose configured delay has passed.', height: 740, layout: positions([
-    ['SCHEDULE — Check Open Leads Hourly', 'TAG — Scheduled Review', 'CONFIG — BUSINESS SETTINGS (EDIT HERE)', 'ROUTE — Is Customer Form?', 'SHEETS — Read Open Leads'],
-    ['FILTER — Pending Consented Follow-Ups', 'SHEETS — Reserve Follow-Up', 'GMAIL — Send Consented Follow-Up', 'SHEETS — Log Follow-Up Outcome'],
-  ]) }), 1800, 740],
+  ['customer-support-delivery', graph({ title: '05 / Send a separately confirmed reply', subtitle: 'Owner-confirmed queue → claim → prepare and record a Gmail draft → send → confirm the Gmail result.', height: 900, layout: positions([
+    ['Check queued replies every minute', 'Read sending Gmail account', 'Claim approved reply', 'Reply waiting?', 'Read Gmail reply context', 'Build confirmed Gmail draft'],
+    ['Draft ready to save?', 'Save confirmed Gmail draft', 'Draft saved?', 'Record prepared draft', 'Send confirmed Gmail draft', 'Gmail delivery result'],
+    ['Preparation needs review', 'Confirm Gmail delivery'],
+  ]) }), 1800, 900],
 ]
 const minX = Math.min(...nodes.map(node => node.position[0]))
 const minY = Math.min(...nodes.map(node => node.position[1]))
 const fullLayout = Object.fromEntries(nodes.map(node => [node.name, [55 + (node.position[0] - minX) * 1.1, 215 + (node.position[1] - minY) * 1.1]]))
 const fullWidth = Math.ceil(Math.max(...Object.values(fullLayout).map(([x]) => x)) + 235)
 const fullHeight = Math.ceil(Math.max(...Object.values(fullLayout).map(([, y]) => y)) + 190)
-stages.push(['customer-support-full', graph({ title: 'AI Customer Support + Lead Capture CRM / Full workflow', subtitle: 'Source node positions and connections, including alternate AI nodes. This map shows structure, not a live execution.', layout: fullLayout, width: fullWidth, height: fullHeight, compact: true }), fullWidth, fullHeight])
+stages.push(['customer-support-full', graph({ title: 'AI Customer Support & Lead CRM / Full workflow', subtitle: `${nodes.length} automation nodes from the ClearFlow Gemini-only export (${source.nodes.length} including notes). Original positions and connections; not a live execution.`, layout: fullLayout, width: fullWidth, height: fullHeight, compact: true }), fullWidth, fullHeight])
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
 try {
   const page = await browser.newPage({ deviceScaleFactor: 1 })
@@ -115,3 +133,11 @@ try {
   }
   console.log(`Full workflow: ${nodes.length} automation nodes; private source data excluded.`)
 } finally { await browser.close() }
+await writeFile(resolve(out, 'customer-support-provenance.json'), JSON.stringify({
+  sourceSha256: createHash('sha256').update(sourceBytes).digest('hex'),
+  totalNodes: source.nodes.length,
+  automationNodes: nodes.length,
+  noteNodes: source.nodes.length - nodes.length,
+  publishedFields: ['node name', 'node type', 'position', 'connection'],
+  diagrams: stages.map(([name, , width, height]) => ({ name, width, height })),
+}, null, 2) + '\n')

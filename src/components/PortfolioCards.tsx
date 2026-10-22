@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { portfolioProjects } from '@/data/portfolio'
 import ProjectPreview from './ProjectPreview'
 
-export default function PortfolioCards({ showDetails = false }: { showDetails?: boolean }) {
+export default function PortfolioCards() {
   const [selected, setSelected] = useState<number | null>(null)
   return (
     <>
@@ -29,12 +29,11 @@ export default function PortfolioCards({ showDetails = false }: { showDetails?: 
             </span>
           )}
           <span className="portfolio-card__body">
-            {project.featured && <span className="portfolio-card__featured">Featured n8n project</span>}
+            {project.featured && <span className="portfolio-card__featured">Featured project</span>}
             <span className="portfolio-card__category">{project.category}</span>
             <span className="portfolio-card__title">{project.title}</span>
             <span className="portfolio-card__description">{project.description}</span>
             {project.tools && <span className="portfolio-card__tools" aria-label="Tools used">{project.tools.map(tool => <span key={tool}>{tool}</span>)}</span>}
-            {showDetails && <span className="portfolio-card__details">{project.details}</span>}
             <span className="portfolio-card__link">
               Explore project
               <ArrowUpRight size={14} weight="bold" aria-hidden="true" />

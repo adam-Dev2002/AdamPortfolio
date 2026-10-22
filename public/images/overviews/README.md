@@ -12,7 +12,7 @@ The script uses installed Playwright with Chrome (or PLAYWRIGHT_CHANNEL). Copy i
 
 | Cover | Existing source assets under public/images |
 | --- | --- |
-| customer-support.png | `workflows/customer-support-overview.png`, `workflows/customer-support-drafts.png` |
+| customer-support.png | `customer-support/dashboard.png`, `customer-support/leads.png` |
 | gmail-assistant.png | `workflows/gmail-assistant.png` |
 | job-finder.png | `workflows/job-discovery.png`, `workflows/application-writing.png` |
 | joblink.png | `joblink/joblink-dashboard.png`, `joblink/joblink-applications.png` |

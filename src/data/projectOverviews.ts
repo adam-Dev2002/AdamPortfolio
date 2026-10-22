@@ -8,8 +8,8 @@ const overview = (name: string, alt: string, caption: string) => ({
 export const projectOverviews = {
   customerSupport: overview(
     'customer-support',
-    'AI Customer Support and Lead CRM presentation with support, lead capture, and follow-up workflow diagrams',
-    'Support replies, lead capture, and follow-ups in one n8n project. This presentation uses diagrams rendered from the supplied workflow export. Explore the detailed views to follow each route.',
+    'AI Customer Support and Lead CRM presentation with actual ClearFlow demo dashboard and lead management screenshots',
+    'Actual dashboard screenshots from an isolated ClearFlow demo workspace. Explore the frontend screens and the supplied Gemini-only workflow. Customer records, counts, and delivery states are fictional.',
   ),
   gmailAssistant: overview(
     'gmail-assistant',

@@ -1,0 +1,49 @@
+{
+  "sourceSha256": "13c6167752c025c00971a1c34c24976ddebd2ece0baede8a153bb5c1de2d2773",
+  "totalNodes": 128,
+  "automationNodes": 118,
+  "noteNodes": 10,
+  "publishedFields": [
+    "node name",
+    "node type",
+    "position",
+    "connection"
+  ],
+  "diagrams": [
+    {
+      "name": "customer-support-overview",
+      "width": 1600,
+      "height": 1200
+    },
+    {
+      "name": "customer-support-drafts",
+      "width": 1800,
+      "height": 1320
+    },
+    {
+      "name": "customer-support-leads",
+      "width": 1800,
+      "height": 1320
+    },
+    {
+      "name": "customer-support-followups",
+      "width": 1800,
+      "height": 900
+    },
+    {
+      "name": "customer-support-sync",
+      "width": 1800,
+      "height": 1110
+    },
+    {
+      "name": "customer-support-delivery",
+      "width": 1800,
+      "height": 900
+    },
+    {
+      "name": "customer-support-full",
+      "width": 6451,
+      "height": 6583
+    }
+  ]
+}

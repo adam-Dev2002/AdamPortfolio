@@ -18,14 +18,14 @@ try {
       assert.equal(await page.locator(`.rail__social[aria-label="${label}"]`).getAttribute('href'), href)
     }
     await page.waitForFunction(() => !document.documentElement.classList.contains('is-intro'))
-    await page.locator('a[href="/projects"]:visible').first().click()
-    await page.getByRole('heading', { name: 'Projects built to be useful.' }).waitFor()
+    await page.locator('a[href="/showcase"]:visible').first().click()
+    await page.getByRole('heading', { name: 'A closer look at my work.' }).waitFor()
     assert.equal(await page.locator('.portfolio-card').count(), 9)
     const geometry = await page.locator('.portfolio-card').evaluateAll(cards => cards.map(card => {
       const image = card.querySelector('.portfolio-card__media').getBoundingClientRect()
       const body = card.querySelector('.portfolio-card__body').getBoundingClientRect()
       const box = card.getBoundingClientRect()
-      return { overlap: image.bottom > body.top + 1, outside: body.bottom > box.bottom + 1 }
+      return { overlap: image.left < body.right - 1 && image.right > body.left + 1 && image.bottom > body.top + 1 && image.top < body.bottom - 1, outside: body.bottom > box.bottom + 1 }
     }))
     assert(geometry.every(card => !card.overlap && !card.outside), 'Card images and text must not overlap or escape their borders')
     await page.getByRole('button', { name: 'Preview PH WFH Job Finder — AI Limited Version', exact: true }).click()
@@ -69,7 +69,7 @@ try {
     assert((await workflowDialog.locator('img').getAttribute('src')).endsWith('joblink-mobile.png'))
     await workflowDialog.getByRole('button', { name: 'Close preview', exact: true }).click()
     await page.reload({ waitUntil: 'networkidle' })
-    await page.getByRole('heading', { name: 'Projects built to be useful.' }).waitFor()
+    await page.getByRole('heading', { name: 'A closer look at my work.' }).waitFor()
     assert.equal(await page.locator('.portfolio-card').count(), 9)
     await wheelAtContent(750)
     assert(await scroll() > 0, 'Projects must scroll after navigating from Home')
@@ -132,7 +132,7 @@ try {
     await page.locator('.cgrid__socials').waitFor()
     assert.equal(await page.locator('.cgrid__social').count(), 4)
     await page.locator('a[href="/"]:visible').first().click()
-    await page.locator('a[href="/projects"]:visible').first().click()
+    await page.locator('a[href="/showcase"]:visible').first().click()
     await page.getByRole('heading', { name: 'Projects built to be useful.' }).waitFor()
     await page.locator('.portfolio-card img').evaluateAll(async images => { images.forEach(img => img.loading = 'eager'); await Promise.all(images.map(img => img.decode())) })
     await page.screenshot({ path: `docs/screenshots/ui-${viewport.width}-projects.png`, fullPage: viewport.width < 1100 })
@@ -141,9 +141,9 @@ try {
     await page.screenshot({ path: `docs/screenshots/ui-${viewport.width}-design-cards.png` })
     assert(await page.evaluate(() => {
       const cards = [...document.querySelectorAll('.portfolio-card')]
-      const lastBottom = Math.max(...cards.map(card => card.getBoundingClientRect().bottom))
-      return document.querySelector('.portfolio-upwork').getBoundingClientRect().top >= lastBottom + 20
-    }), 'The Upwork footer must have clear space below the project cards')
+      const firstTop = Math.min(...cards.map(card => card.getBoundingClientRect().top))
+      return document.querySelector('.portfolio-showcase__projects-head').getBoundingClientRect().bottom <= firstTop
+    }), 'The Showcase heading and Upwork link must have clear space above the project cards')
     await page.getByRole('button', { name: 'Preview 5S Plumbing', exact: true }).click()
     await page.locator('dialog.project-preview').locator('img').evaluate(img => img.decode())
     await page.mouse.click(3, 3)

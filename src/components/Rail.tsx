@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 import ThemeGlyph from './ThemeGlyph'
 import {
   HomeIcon,
-  FolderIcon,
   StackIcon,
   CupIcon,
   StarIcon,
@@ -26,7 +25,6 @@ import { profile } from '@/data/profile'
  */
 export const RAIL_LINKS = [
   { label: 'Home', to: '/', Icon: HomeIcon },
-  { label: 'Projects', to: '/projects', Icon: FolderIcon },
   { label: 'Skills', to: '/services', Icon: StackIcon },
   { label: 'Showcase', to: '/showcase', Icon: CupIcon },
   { label: 'Experience', to: '/testimonials', Icon: StarIcon },

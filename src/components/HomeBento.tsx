@@ -51,8 +51,8 @@ const SKILLS: { title: string; Icon: Icon }[] = [
 export default function HomeBento() {
   return (
     <nav className="bento" aria-label="Explore Adam's portfolio">
-      <Link to="/projects" className="bento__card bento__card--projects">
-        <CardHead Icon={FolderOpen} title="Projects" desc="Mobile apps, web, automation, and design." />
+      <Link to="/showcase" className="bento__card bento__card--projects">
+        <CardHead Icon={FolderOpen} title="Showcase" desc="Mobile apps, web, automation, and design." />
         <div className="bento__media bento__reel" aria-hidden="true">
           <div className="bento__reel-track">
             {['/images/closeby/closeby-overview.png', '/images/overviews/gmail-assistant.png', '/images/overviews/plumbing.png'].map((src) => (
