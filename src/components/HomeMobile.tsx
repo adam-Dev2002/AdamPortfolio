@@ -23,7 +23,7 @@ export function HomeProfile() {
           {profile.name}
         </span>
         <span className="hprofile__handle">
-          {profile.handle} · {profile.role}
+          {profile.handle}
         </span>
       </div>
       <QuickMenu className="hprofile__menu" />

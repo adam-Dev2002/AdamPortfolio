@@ -53,6 +53,7 @@ export default function Home() {
           )}
         </div>
 
+        <p className="home__specialties">{profile.role}</p>
         <p className="home__lede">{hero.body}</p>
         {phone && <HomeStats />}
       </div>

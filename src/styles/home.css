@@ -70,6 +70,16 @@
 .home__cta svg { color: var(--orange); }
 .home__cta:hover { transform: translateY(-2px); }
 
+.home__specialties {
+  margin-top: 16px;
+  max-width: 75ch;
+  font-size: clamp(13px, 1.05vw, 18px);
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--orange-ink);
+  text-wrap: pretty;
+}
+
 /* One line, from 1400px up.
    The sentence is 130 characters. Measured against the panel it needs roughly
    0.65 x the viewport width to sit on one line, and the panel only offers that

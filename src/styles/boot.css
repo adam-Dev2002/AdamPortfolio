@@ -238,6 +238,7 @@
 html.is-intro-head .home__title { opacity: 0; }
 
 html.is-intro .home__cta,
+html.is-intro .home__specialties,
 html.is-intro .home__lede,
 html.is-intro .home__glass,
 html.is-intro .nav,
@@ -254,6 +255,7 @@ html.is-intro .tabbar {
 html.is-intro .tabbar { transform: translateY(24px); }
 
 .home__cta,
+.home__specialties,
 .home__lede,
 .home__glass,
 .nav,
@@ -301,6 +303,7 @@ html.is-intro .rail__inner > * {
   .boot { display: none; }
   html.is-intro-head .home__title,
   html.is-intro .home__cta,
+  html.is-intro .home__specialties,
   html.is-intro .home__lede,
   html.is-intro .home__glass,
   html.is-intro .nav,
